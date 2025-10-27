@@ -101,7 +101,7 @@ const Home = () => {
                 FEARLINE
               </h1>
               <p className="text-xl md:text-2xl text-[#cccccc] max-w-3xl mx-auto font-light">
-                [Nový] FiveM Roleplay server pro CZ/SK
+                Nejnovější FiveM RP na CZ/SK
               </p>
             </motion.div>
 
