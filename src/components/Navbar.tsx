@@ -18,7 +18,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 glass-strong"
+      className="fixed top-0 left-0 right-0 z-50 glass-strong border-b border-[#ff3333]/10"
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
@@ -27,18 +27,21 @@ const Navbar = () => {
               src={logo}
               alt="Fearline.eu Logo"
               className="h-12 w-auto"
-              whileHover={{ scale: 1.05, rotate: 5 }}
+              style={{
+                filter: "drop-shadow(0 0 10px #ff3333)"
+              }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ duration: 0.3 }}
             />
             <motion.h1
-              className="text-2xl font-bold text-gradient hidden sm:block"
+              className="text-2xl font-black text-gradient hidden sm:block"
               whileHover={{ scale: 1.05 }}
             >
-              Fearline.eu
+              FEARLINE
             </motion.h1>
           </Link>
 
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               const Icon = item.icon;
@@ -46,16 +49,16 @@ const Navbar = () => {
               return (
                 <Link key={item.path} to={item.path}>
                   <motion.div
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                    className={`flex items-center space-x-2 px-5 py-3 rounded-xl transition-all font-semibold ${
                       isActive
-                        ? "bg-primary text-primary-foreground glow-red"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                        ? "bg-gradient-to-r from-[#ff3333] to-[#ff6666] text-white shadow-[0_0_20px_rgba(255,51,51,0.4)]"
+                        : "text-[#cccccc] hover:text-white hover:bg-[#1a1a1a]"
                     }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Icon className="text-lg" />
-                    <span className="hidden md:inline font-medium">{item.label}</span>
+                    <span className="hidden md:inline">{item.label}</span>
                   </motion.div>
                 </Link>
               );

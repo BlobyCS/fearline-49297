@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaGamepad, FaDiscord, FaUserShield, FaShieldAlt } from "react-icons/fa";
+import { FaBook, FaGamepad, FaComments, FaDiscord, FaGavel } from "react-icons/fa";
 import {
   Accordion,
   AccordionContent,
@@ -9,126 +9,107 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const Rules = () => {
-
   const ruleCategories = [
     {
-      id: "game",
-      label: "Herní pravidla",
+      category: "Základní pravidla RP",
       icon: FaGamepad,
-      color: "from-primary to-accent",
+      color: "#ff3333",
       badge: "RP",
-      badgeColor: "bg-primary",
+      rules: [
+        {
+          title: "Powergaming (PG)",
+          description: "Zakázáno provádět akce, které nejsou možné v reálném životě nebo ignorovat fyzické limity postavy."
+        },
+        {
+          title: "Metagaming (MG)",
+          description: "Zakázáno využívat informace získané mimo hru (Discord, stream) pro výhodu v roleplayi."
+        },
+        {
+          title: "Random Deathmatch (RDM)",
+          description: "Zakázáno zabíjet hráče bez roleplay důvodu nebo náležité interakce."
+        },
+        {
+          title: "Vehicle Deathmatch (VDM)",
+          description: "Zakázáno používat vozidlo jako zbraň bez roleplay důvodu."
+        },
+        {
+          title: "Fear RP",
+          description: "Povinnost realisticky reagovat na ohrožení života - strach, poslušnost při aim."
+        }
+      ]
     },
     {
-      id: "discord",
-      label: "Discord pravidla",
+      category: "OOC pravidla",
+      icon: FaComments,
+      color: "#ff6666",
+      badge: "OOC",
+      rules: [
+        {
+          title: "Respekt ke všem",
+          description: "Respektuj ostatní hráče, A-Team a dodržuj slušné chování."
+        },
+        {
+          title: "Toxicita",
+          description: "Zakázáno urážet, diskriminovat nebo šikanovat ostatní hráče."
+        },
+        {
+          title: "OOC komunikace v IC",
+          description: "V roleplayi se nehovoří o věcech mimo hru - žádné zmínky o Discordu, streamu apod."
+        },
+        {
+          title: "Stream sniping",
+          description: "Zakázáno sledovat stream jiného hráče pro získání výhody."
+        }
+      ]
+    },
+    {
+      category: "Discord pravidla",
       icon: FaDiscord,
-      color: "from-secondary to-accent",
-      badge: "Komunita",
-      badgeColor: "bg-secondary",
+      color: "#5865F2",
+      badge: "Discord",
+      rules: [
+        {
+          title: "Slušné chování",
+          description: "Na Discordu platí stejná pravidla respektu jako ve hře."
+        },
+        {
+          title: "Spam",
+          description: "Nespamuj zbytečnými zprávami, emoji nebo pingy."
+        },
+        {
+          title: "Správné kanály",
+          description: "Piš do příslušných kanálů podle jejich účelu."
+        },
+        {
+          title: "Reklama",
+          description: "Zakázáno sdílet odkazy na jiné servery nebo produkty bez povolení."
+        }
+      ]
     },
     {
-      id: "admin",
-      label: "Admin pravidla",
-      icon: FaUserShield,
-      color: "from-accent to-primary",
-      badge: "A-Team",
-      badgeColor: "bg-accent",
-    },
-  ];
-
-  const allRules = [
-    {
-      category: "game",
-      title: "Základní pravidla RP",
-      content:
-        "Roleplay musí být realistický. Žádné RDM (Random Deathmatch), VDM (Vehicle Deathmatch) či fail RP.",
-      tags: ["RP", "RDM", "VDM"],
-    },
-    {
-      category: "game",
-      title: "Komunikace",
-      content:
-        "Ve hře je povinná komunikace přes Discord nebo TeamSpeak. Respektuj ostatní hráče.",
-      tags: ["Komunikace", "Discord"],
-    },
-    {
-      category: "game",
-      title: "Meta Gaming",
-      content:
-        "Informace získané mimo hru (Discord, stream) nesmí být použity in-game.",
-      tags: ["Metagaming", "Zakázáno"],
-    },
-    {
-      category: "game",
-      title: "New Life Rule",
-      content:
-        "Po smrti zapomeneš vše, co se stalo před smrtí. Nemůžeš se vrátit na místo smrti 15 minut.",
-      tags: ["NLR", "Smrt"],
-    },
-    {
-      category: "game",
-      title: "Power Gaming",
-      content:
-        "Zakázáno nutit ostatní hráče do nevýhodných situací bez možnosti reakce.",
-      tags: ["PowerGaming", "Zakázáno"],
-    },
-    {
-      category: "discord",
-      title: "Respekt",
-      content:
-        "Respektuj všechny členy komunity. Žádné urážky, rasismus či hate speech.",
-      tags: ["Respekt", "Toxicita"],
-    },
-    {
-      category: "discord",
-      title: "Spam",
-      content:
-        "Neposílej spam, flood nebo zbytečně nepinguj členy A-Teamu.",
-      tags: ["Spam", "Flood"],
-    },
-    {
-      category: "discord",
-      title: "Obsah",
-      content:
-        "Zákaz NSFW obsahu, reklamy nebo jiného nevhodného materiálu.",
-      tags: ["NSFW", "Zakázáno"],
-    },
-    {
-      category: "discord",
-      title: "Kanály",
-      content:
-        "Piš pouze do příslušných kanálů. Dodržuj strukturu serveru.",
-      tags: ["Kanály", "Struktura"],
-    },
-    {
-      category: "admin",
-      title: "Fair Play",
-      content:
-        "Adminové musí být nestranní a fair ke všem hráčům bez rozdílu.",
-      tags: ["FairPlay", "Nestrannost"],
-    },
-    {
-      category: "admin",
-      title: "Důkazy",
-      content:
-        "Každý ban nebo kick musí být podložen důkazy (video, screenshot).",
-      tags: ["Důkazy", "Ban"],
-    },
-    {
-      category: "admin",
-      title: "Komunikace",
-      content:
-        "Před potrestáním hráče vždy vyslechni obě strany příběhu.",
-      tags: ["Komunikace", "Fair"],
-    },
-    {
-      category: "admin",
-      title: "Abuse",
-      content:
-        "Zneužití admin pravomocí povede k okamžitému odebrání pozice.",
-      tags: ["Abuse", "Zakázáno"],
-    },
+      category: "Tresty",
+      icon: FaGavel,
+      color: "#ff3333",
+      badge: "Tresty",
+      rules: [
+        {
+          title: "Warn (varování)",
+          description: "První upozornění při menším porušení pravidel."
+        },
+        {
+          title: "Kick",
+          description: "Vyhození ze serveru při opakovaném porušení."
+        },
+        {
+          title: "Ban (dočasný)",
+          description: "Dočasný zákaz vstupu na server - 1 den až několik měsíců."
+        },
+        {
+          title: "Permaban",
+          description: "Trvalý zákaz vstupu za závažné nebo opakované porušení pravidel."
+        }
+      ]
+    }
   ];
 
   return (
@@ -138,115 +119,99 @@ const Rules = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <div className="inline-flex items-center justify-center mb-6">
-            <FaShieldAlt className="text-6xl text-primary animate-float" />
+          <div className="inline-flex items-center justify-center mb-8">
+            <div 
+              className="p-6 rounded-3xl"
+              style={{
+                background: "linear-gradient(135deg, #ff3333, #ff6666)",
+                boxShadow: "0 0 50px rgba(255, 51, 51, 0.4)"
+              }}
+            >
+              <FaBook className="text-7xl text-white" />
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="text-gradient">Pravidla</span> serveru
+          <h1 className="text-6xl md:text-8xl font-black mb-6">
+            Pravidla <span className="text-gradient">serveru</span>
           </h1>
-          <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
-            Přečti si naše pravidla a dodržuj je pro bezproblémovou hru
+          <p className="text-[#cccccc] text-xl max-w-3xl mx-auto">
+            Přečti si pečlivě všechna pravidla. Jejich nedodržování bude potrestáno.
           </p>
         </motion.div>
 
-        {/* Category Cards */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
-          {ruleCategories.map((category, index) => {
+        <div className="max-w-5xl mx-auto space-y-8">
+          {ruleCategories.map((category, categoryIndex) => {
             const Icon = category.icon;
-            const categoryRules = allRules.filter((r) => r.category === category.id);
-            
             return (
               <motion.div
-                key={category.id}
+                key={categoryIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glass-strong rounded-2xl p-8 hover:scale-105 transition-all duration-300 group"
+                transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
               >
-                <div
-                  className={`w-16 h-16 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform duration-300`}
-                >
-                  <Icon className="text-3xl text-white" />
+                <div className="glass-strong rounded-3xl p-8 border border-[#ff3333]/20">
+                  <div className="flex items-center gap-6 mb-8">
+                    <div 
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                      style={{
+                        background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`,
+                        boxShadow: `0 0 30px ${category.color}66`
+                      }}
+                    >
+                      <Icon className="text-3xl text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-3xl font-black mb-2">{category.category}</h2>
+                      <Badge 
+                        className="text-sm font-bold"
+                        style={{
+                          background: category.color,
+                          color: "white"
+                        }}
+                      >
+                        {category.badge}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <Accordion type="single" collapsible className="space-y-3">
+                    {category.rules.map((rule, ruleIndex) => (
+                      <AccordionItem 
+                        key={ruleIndex} 
+                        value={`item-${categoryIndex}-${ruleIndex}`}
+                        className="glass rounded-2xl border border-[#ff3333]/10 px-6 hover:border-[#ff3333]/30 transition-all"
+                      >
+                        <AccordionTrigger className="text-lg font-bold hover:text-[#ff3333] transition-colors py-5">
+                          {rule.title}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-[#cccccc] text-base leading-relaxed pb-5">
+                          {rule.description}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="text-2xl font-bold">{category.label}</h3>
-                  <Badge className={`${category.badgeColor} text-white`}>
-                    {category.badge}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  {categoryRules.length} pravidel
-                </p>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Rules Accordion */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-20 text-center"
         >
-          <div className="glass-strong rounded-2xl p-8">
-            <Accordion type="single" collapsible className="space-y-4">
-              {allRules.map((rule, index) => {
-                const category = ruleCategories.find((c) => c.id === rule.category);
-                return (
-                  <AccordionItem
-                    key={index}
-                    value={`rule-${index}`}
-                    className="glass rounded-xl px-6 border-none"
-                  >
-                    <AccordionTrigger className="hover:no-underline py-5">
-                      <div className="flex items-center gap-4 text-left">
-                        <div
-                          className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category?.color} flex items-center justify-center flex-shrink-0`}
-                        >
-                          <span className="text-white font-bold text-sm">
-                            {index + 1}
-                          </span>
-                        </div>
-                        <span className="text-lg font-semibold">{rule.title}</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-6 pt-2">
-                      <p className="text-muted-foreground leading-relaxed mb-4 pl-14">
-                        {rule.content}
-                      </p>
-                      <div className="flex flex-wrap gap-2 pl-14">
-                        {rule.tags.map((tag, tagIndex) => (
-                          <Badge
-                            key={tagIndex}
-                            variant="outline"
-                            className="border-primary/30 text-primary"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 text-center"
-        >
-          <div className="glass-strong rounded-xl p-6 max-w-2xl mx-auto">
-            <p className="text-muted-foreground">
-              <span className="text-primary font-semibold">Upozornění:</span>{" "}
-              Neznalost pravidel tě neomlouvá. Za porušení pravidel můžeš být
-              potrestán.
+          <div className="glass-strong rounded-3xl p-12 max-w-4xl mx-auto border-2 border-[#ff3333]/30">
+            <FaGavel className="text-6xl text-[#ff3333] mx-auto mb-6" />
+            <h3 className="text-4xl md:text-5xl font-black mb-6">
+              Důležité <span className="text-gradient">upozornění</span>
+            </h3>
+            <p className="text-[#cccccc] text-lg leading-relaxed">
+              Neznalost pravidel není omluva. Každý hráč je povinen si pravidla přečíst
+              a dodržovat je. A-Team má vždy poslední slovo v každé situaci.
             </p>
           </div>
         </motion.div>

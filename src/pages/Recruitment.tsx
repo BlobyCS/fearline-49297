@@ -35,7 +35,7 @@ const Recruitment = () => {
       id: "admin",
       title: "Admin",
       icon: FaUserShield,
-      color: "from-blue-500 to-blue-700",
+      color: "#3498db",
       description: "Starej se o chod serveru a pomáhej komunitě",
       questions: [
         { id: "name", label: "Tvoje jméno", type: "text", placeholder: "Jan Novák", required: true },
@@ -50,7 +50,7 @@ const Recruitment = () => {
       id: "support",
       title: "Support",
       icon: FaHeadset,
-      color: "from-green-500 to-green-700",
+      color: "#2ecc71",
       description: "Pomáhej hráčům s jejich problémy a dotazy",
       questions: [
         { id: "name", label: "Tvoje jméno", type: "text", placeholder: "Jan Novák", required: true },
@@ -65,7 +65,7 @@ const Recruitment = () => {
       id: "developer",
       title: "Developer",
       icon: FaCode,
-      color: "from-purple-500 to-purple-700",
+      color: "#9b59b6",
       description: "Vyvíjej a vylepšuj server",
       questions: [
         { id: "name", label: "Tvoje jméno", type: "text", placeholder: "Jan Novák", required: true },
@@ -81,7 +81,7 @@ const Recruitment = () => {
       id: "streamer",
       title: "Streamer",
       icon: FaVideo,
-      color: "from-red-500 to-red-700",
+      color: "#ff3333",
       description: "Streamuj náš server a přiveď nové hráče",
       questions: [
         { id: "name", label: "Tvoje jméno", type: "text", placeholder: "Jan Novák", required: true },
@@ -110,7 +110,6 @@ const Recruitment = () => {
     setIsSubmitting(true);
 
     try {
-      // Validate required fields
       const missingFields = selectedPosition?.questions
         .filter((q) => q.required && !formData[q.id])
         .map((q) => q.label);
@@ -121,7 +120,6 @@ const Recruitment = () => {
         return;
       }
 
-      // Create embed for Discord
       const embed = {
         embeds: [
           {
@@ -175,18 +173,18 @@ const Recruitment = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+          <h1 className="text-6xl md:text-7xl font-black mb-6">
             Přidej se k <span className="text-gradient">Týmu</span>
           </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-[#cccccc] text-xl max-w-2xl mx-auto">
             Hledáme aktivní a zodpovědné lidi. Vyber si pozici a vyplň formulář.
           </p>
         </motion.div>
 
         {!selectedPosition && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {positions.map((position, index) => {
               const Icon = position.icon;
               return (
@@ -195,20 +193,24 @@ const Recruitment = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -10 }}
+                  whileHover={{ y: -10 }}
                   onClick={() => handlePositionSelect(position)}
-                  className="glass rounded-2xl p-8 text-center space-y-4 cursor-pointer hover:glow-purple transition-all group"
+                  className="glass-strong rounded-3xl p-10 text-center space-y-6 cursor-pointer glow-hover"
                 >
                   <div
-                    className={`mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br ${position.color} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300`}
+                    className="mx-auto w-24 h-24 rounded-2xl flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${position.color}, ${position.color}dd)`,
+                      boxShadow: `0 0 30px ${position.color}66`
+                    }}
                   >
-                    <Icon className="text-white text-3xl" />
+                    <Icon className="text-white text-4xl" />
                   </div>
-                  <h3 className="text-2xl font-bold">{position.title}</h3>
-                  <p className="text-muted-foreground text-sm">{position.description}</p>
+                  <h3 className="text-3xl font-bold">{position.title}</h3>
+                  <p className="text-[#cccccc] text-sm leading-relaxed">{position.description}</p>
                   <Button 
                     variant="outline" 
-                    className="w-full font-bold"
+                    className="w-full font-bold border-2 hover:bg-[#ff3333]/10 hover:border-[#ff3333]"
                   >
                     Vybrat pozici
                   </Button>
@@ -223,32 +225,40 @@ const Recruitment = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="max-w-2xl mx-auto"
+            className="max-w-3xl mx-auto"
           >
-            <div className="glass-strong rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
+            <div className="glass-strong rounded-3xl p-12 border border-[#ff3333]/20">
+              <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center gap-6">
                   <div
-                    className={`w-16 h-16 rounded-xl bg-gradient-to-br ${selectedPosition.color} flex items-center justify-center`}
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${selectedPosition.color}, ${selectedPosition.color}dd)`,
+                      boxShadow: `0 0 30px ${selectedPosition.color}66`
+                    }}
                   >
-                    <selectedPosition.icon className="text-white text-2xl" />
+                    <selectedPosition.icon className="text-white text-3xl" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold">{selectedPosition.title}</h2>
-                    <p className="text-muted-foreground">{selectedPosition.description}</p>
+                    <h2 className="text-4xl font-black">{selectedPosition.title}</h2>
+                    <p className="text-[#cccccc] text-lg">{selectedPosition.description}</p>
                   </div>
                 </div>
-                <Button variant="ghost" onClick={() => setSelectedPosition(null)}>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => setSelectedPosition(null)}
+                  className="hover:bg-[#ff3333]/10"
+                >
                   Zpět
                 </Button>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
                 {selectedPosition.questions.map((question) => (
-                  <div key={question.id} className="space-y-2">
-                    <Label htmlFor={question.id} className="text-base">
+                  <div key={question.id} className="space-y-3">
+                    <Label htmlFor={question.id} className="text-lg font-semibold">
                       {question.label}
-                      {question.required && <span className="text-destructive ml-1">*</span>}
+                      {question.required && <span className="text-[#ff3333] ml-1">*</span>}
                     </Label>
                     {question.type === "textarea" ? (
                       <Textarea
@@ -257,7 +267,7 @@ const Recruitment = () => {
                         value={formData[question.id] || ""}
                         onChange={(e) => handleInputChange(question.id, e.target.value)}
                         required={question.required}
-                        className="min-h-[120px] bg-background/50"
+                        className="min-h-[140px] bg-[#1a1a1a] border-[#ff3333]/20 focus:border-[#ff3333] text-base"
                       />
                     ) : (
                       <Input
@@ -267,7 +277,7 @@ const Recruitment = () => {
                         value={formData[question.id] || ""}
                         onChange={(e) => handleInputChange(question.id, e.target.value)}
                         required={question.required}
-                        className="bg-background/50"
+                        className="bg-[#1a1a1a] border-[#ff3333]/20 focus:border-[#ff3333] h-14 text-base"
                       />
                     )}
                   </div>
@@ -276,8 +286,7 @@ const Recruitment = () => {
                 <Button 
                   type="submit" 
                   size="lg" 
-                  variant="gradient"
-                  className="w-full font-bold" 
+                  className="w-full py-8 text-xl font-bold rounded-2xl bg-gradient-to-r from-[#ff3333] to-[#ff6666] hover:from-[#ff6666] hover:to-[#ff3333] shadow-[0_0_40px_rgba(255,51,51,0.5)] hover:shadow-[0_0_60px_rgba(255,51,51,0.7)] transition-all duration-300" 
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Odesílám..." : "Odeslat žádost"}
@@ -292,19 +301,23 @@ const Recruitment = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="max-w-2xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center"
           >
-            <div className="glass-strong rounded-2xl p-12 space-y-6">
+            <div className="glass-strong rounded-3xl p-16 space-y-8 border border-[#2ecc71]/30">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center"
+                className="mx-auto w-32 h-32 rounded-full flex items-center justify-center"
+                style={{
+                  background: "linear-gradient(135deg, #2ecc71, #27ae60)",
+                  boxShadow: "0 0 50px rgba(46, 204, 113, 0.5)"
+                }}
               >
-                <FaCheckCircle className="text-white text-5xl" />
+                <FaCheckCircle className="text-white text-7xl" />
               </motion.div>
-              <h2 className="text-4xl font-bold">Žádost odeslána!</h2>
-              <p className="text-muted-foreground text-lg">
+              <h2 className="text-5xl font-black">Žádost odeslána!</h2>
+              <p className="text-[#cccccc] text-xl leading-relaxed">
                 Tvoje žádost byla úspěšně odeslána na náš Discord. Brzy se ti ozveme!
               </p>
               <Button
@@ -313,6 +326,7 @@ const Recruitment = () => {
                   setIsSubmitted(false);
                 }}
                 size="lg"
+                className="px-12 py-7 text-lg rounded-2xl font-bold bg-gradient-to-r from-[#ff3333] to-[#ff6666] hover:from-[#ff6666] hover:to-[#ff3333]"
               >
                 Zpět na výběr pozice
               </Button>
