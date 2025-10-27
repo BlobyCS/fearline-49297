@@ -42,8 +42,8 @@ const Home = () => {
   ];
 
   const stats = [
-    { label: "Aktivních hráčů", value: "500+", icon: FaUsers },
-    { label: "Vlastních scriptů", value: "100+", icon: FaCode },
+    { label: "Aktivních hráčů", value: "0+", icon: FaUsers },
+    { label: "Vlastních scriptů", value: "2+", icon: FaCode },
     { label: "Server uptime", value: "99.9%", icon: FaServer },
   ];
 
