@@ -206,7 +206,10 @@ const Recruitment = () => {
                   </div>
                   <h3 className="text-2xl font-bold">{position.title}</h3>
                   <p className="text-muted-foreground text-sm">{position.description}</p>
-                  <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <Button 
+                    variant="outline" 
+                    className="w-full font-bold"
+                  >
                     Vybrat pozici
                   </Button>
                 </motion.div>
@@ -270,7 +273,13 @@ const Recruitment = () => {
                   </div>
                 ))}
 
-                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  variant="gradient"
+                  className="w-full font-bold" 
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Odesílám..." : "Odeslat žádost"}
                 </Button>
               </form>

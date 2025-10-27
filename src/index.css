@@ -8,13 +8,13 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 25% 8%;
+    --background: 222 47% 6%;
     --foreground: 210 20% 98%;
 
-    --card: 220 20% 10%;
+    --card: 220 25% 10%;
     --card-foreground: 210 20% 98%;
 
-    --popover: 220 20% 10%;
+    --popover: 220 25% 10%;
     --popover-foreground: 210 20% 98%;
 
     --primary: 5 95% 58%;
@@ -24,7 +24,7 @@ All colors MUST be HSL.
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 15% 20%;
-    --muted-foreground: 215 15% 70%;
+    --muted-foreground: 215 20% 65%;
 
     --accent: 340 80% 60%;
     --accent-foreground: 0 0% 100%;
@@ -32,8 +32,8 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
+    --border: 220 20% 15%;
+    --input: 220 20% 15%;
     --ring: 5 95% 58%;
 
     --radius: 1rem;
@@ -43,6 +43,18 @@ All colors MUST be HSL.
     --chart-3: 340 80% 60%;
     --chart-4: 190 80% 50%;
     --chart-5: 45 85% 60%;
+
+    /* Gradient variables */
+    --gradient-primary: linear-gradient(135deg, hsl(5 95% 58%) 0%, hsl(340 80% 60%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(260 60% 65%) 0%, hsl(340 80% 60%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(5 95% 58%) 0%, hsl(5 95% 68%) 100%);
+
+    /* Shadow variables */
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-glow-primary: 0 0 30px hsla(5, 95%, 58%, 0.3);
+    --shadow-glow-secondary: 0 0 30px hsla(260, 60%, 65%, 0.3);
   }
 }
 
@@ -52,7 +64,8 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Urbanist', sans-serif;
     background: linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 10%) 100%);
     min-height: 100vh;
   }
@@ -60,23 +73,40 @@ All colors MUST be HSL.
   html {
     scroll-behavior: smooth;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 700;
+  }
 }
 
 @layer utilities {
   .glass {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-medium), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   }
 
   .glass-strong {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.06) 100%);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-large), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .soft-shadow {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .medium-shadow {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .large-shadow {
+    box-shadow: var(--shadow-large);
   }
 
   .text-gradient {
