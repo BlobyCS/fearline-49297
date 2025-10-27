@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord } from "react-icons/fa";
 import logo from "@/assets/logo.png";
 
 const Navbar = () => {
@@ -63,6 +63,18 @@ const Navbar = () => {
                 </Link>
               );
             })}
+            
+            <motion.a
+              href="https://discord.gg/2X8YFkcTRt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-[#5865F2] text-white hover:bg-[#4752C4] transition-all font-semibold shadow-[0_0_15px_rgba(88,101,242,0.3)] hover:shadow-[0_0_25px_rgba(88,101,242,0.5)]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaDiscord className="text-lg" />
+              <span className="hidden md:inline">Discord</span>
+            </motion.a>
           </div>
         </div>
       </div>
