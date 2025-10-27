@@ -10,6 +10,8 @@ import ATeam from "./pages/ATeam";
 import VIP from "./pages/VIP";
 import Recruitment from "./pages/Recruitment";
 import NotFound from "./pages/NotFound";
+import DiscordAuth from "./pages/DiscordAuth";
+import DiscordCallback from "./pages/DiscordCallback";
 
 const queryClient = new QueryClient();
 
@@ -19,16 +21,16 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          <Route path="/pravidla" element={<Rules />} />
-          <Route path="/ateam" element={<ATeam />} />
-          <Route path="/vip" element={<VIP />} />
-          <Route path="/nabor" element={<Recruitment />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/auth" element={<DiscordAuth />} />
+          <Route path="/auth/callback" element={<DiscordCallback />} />
+          <Route path="/" element={<Layout><Home /></Layout>} />
+          <Route path="/pravidla" element={<Layout><Rules /></Layout>} />
+          <Route path="/ateam" element={<Layout><ATeam /></Layout>} />
+          <Route path="/vip" element={<Layout><VIP /></Layout>} />
+          <Route path="/nabor" element={<Layout><Recruitment /></Layout>} />
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

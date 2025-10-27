@@ -1,10 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt } from "react-icons/fa";
 import logo from "@/assets/logo.png";
+import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
+  const { user, logout } = useDiscordAuth();
 
   const navItems = [
     { path: "/", label: "Domů", icon: FaHome },
@@ -75,6 +84,47 @@ const Navbar = () => {
               <FaDiscord className="text-lg" />
               <span className="hidden md:inline">Discord</span>
             </motion.a>
+
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <motion.button
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-[#1a1a1a] hover:bg-[#222222] transition-all"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.discord_avatar || undefined} />
+                      <AvatarFallback className="bg-[#ff3333] text-white">
+                        {user.discord_username.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-[#cccccc] font-semibold hidden md:inline">
+                      @{user.discord_username}
+                    </span>
+                  </motion.button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20">
+                  <DropdownMenuItem
+                    onClick={logout}
+                    className="text-[#cccccc] hover:text-white cursor-pointer"
+                  >
+                    <FaSignOutAlt className="mr-2" />
+                    Odhlásit se
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <motion.button
+                  className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#ff3333] to-[#ff6666] text-white hover:shadow-[0_0_25px_rgba(255,51,51,0.5)] transition-all font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span>Přihlásit se</span>
+                </motion.button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
