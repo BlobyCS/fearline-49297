@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      discord_sessions: {
+        Row: {
+          access_token: string
+          created_at: string
+          discord_avatar: string | null
+          discord_id: string
+          discord_username: string
+          expires_at: string
+          id: string
+          refresh_token: string | null
+          updated_at: string
+        }
+        Insert: {
+          access_token: string
+          created_at?: string
+          discord_avatar?: string | null
+          discord_id: string
+          discord_username: string
+          expires_at: string
+          id?: string
+          refresh_token?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          discord_avatar?: string | null
+          discord_id?: string
+          discord_username?: string
+          expires_at?: string
+          id?: string
+          refresh_token?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
