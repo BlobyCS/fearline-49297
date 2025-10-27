@@ -142,20 +142,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 15, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="w-8 h-14 border-2 border-[#ff3333] rounded-full flex items-start justify-center p-2">
-            <motion.div
-              className="w-2 h-2 bg-[#ff3333] rounded-full"
-              animate={{ y: [0, 20, 0], opacity: [1, 0.3, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </div>
-        </motion.div>
       </section>
 
       {/* O nás section */}
