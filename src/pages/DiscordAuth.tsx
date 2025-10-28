@@ -39,11 +39,13 @@ const DiscordAuth = () => {
   };
 
   const handleLogin = () => {
-    const clientId = '1278587814904201227';
+    const clientId = "1266090505117372570";
     const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback`);
-    const scope = encodeURIComponent('identify bot');
+    const scope = "identify";
     
-    window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=0&response_type=code&redirect_uri=${redirectUri}&integration_type=0&scope=${scope}`;
+    const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
+    
+    window.location.href = authUrl;
   };
 
   return (
