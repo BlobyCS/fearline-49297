@@ -13,6 +13,7 @@ Deno.serve(async (req) => {
   try {
     const url = new URL(req.url);
     const code = url.searchParams.get('code');
+    const redirectUri = url.searchParams.get('redirect_uri');
     
     if (!code) {
       return new Response(
@@ -21,9 +22,15 @@ Deno.serve(async (req) => {
       );
     }
 
+    if (!redirectUri) {
+      return new Response(
+        JSON.stringify({ error: 'No redirect_uri provided' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const clientId = Deno.env.get('DISCORD_CLIENT_ID');
     const clientSecret = Deno.env.get('DISCORD_CLIENT_SECRET');
-    const redirectUri = `${url.origin}/auth/callback`;
 
     console.log('Exchanging code for token...');
 
