@@ -72,6 +72,42 @@ Deno.serve(async (req) => {
     const userData = await userResponse.json();
     console.log('User info received:', userData.username);
 
+    // Get guild ID from environment or use the invite code to join
+    const guildId = Deno.env.get('DISCORD_GUILD_ID');
+    
+    if (guildId) {
+      try {
+        // Try to add user to the guild using bot token
+        const botToken = Deno.env.get('DISCORD_BOT_TOKEN');
+        if (botToken) {
+          const addMemberResponse = await fetch(
+            `https://discord.com/api/guilds/${guildId}/members/${userData.id}`,
+            {
+              method: 'PUT',
+              headers: {
+                Authorization: `Bot ${botToken}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                access_token: tokenData.access_token,
+              }),
+            }
+          );
+          
+          if (addMemberResponse.ok) {
+            console.log('User added to guild successfully');
+          } else if (addMemberResponse.status === 204) {
+            console.log('User is already in the guild');
+          } else {
+            console.log('Could not add user to guild:', await addMemberResponse.text());
+          }
+        }
+      } catch (error) {
+        console.error('Error adding user to guild:', error);
+        // Continue with login even if guild join fails
+      }
+    }
+
     // Calculate token expiration
     const expiresAt = new Date(Date.now() + tokenData.expires_in * 1000).toISOString();
 

@@ -41,7 +41,7 @@ const DiscordAuth = () => {
   const handleLogin = () => {
     const clientId = '1278587814904201227';
     const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback`);
-    const scope = encodeURIComponent('identify');
+    const scope = encodeURIComponent('identify guilds.join');
     
     window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
   };
