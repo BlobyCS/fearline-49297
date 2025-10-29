@@ -1,19 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt, FaTicketAlt, FaUser, FaUserShield } from "react-icons/fa";
 import logo from "@/assets/logo.png";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
-  const { user, logout } = useDiscordAuth();
+  const { user: discordUser, logout: discordLogout } = useDiscordAuth();
+  const { user, isAdmin, signOut } = useAuth();
 
   const navItems = [
     { path: "/", label: "Domů", icon: FaHome },
@@ -94,19 +97,71 @@ const Navbar = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.discord_avatar || undefined} />
                       <AvatarFallback className="bg-[#ff3333] text-white">
-                        {user.discord_username.charAt(0).toUpperCase()}
+                        {user.email?.charAt(0).toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
                     <span className="text-[#cccccc] font-semibold hidden md:inline">
-                      @{user.discord_username}
+                      {user.email?.split('@')[0] || 'User'}
+                    </span>
+                  </motion.button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20 w-48">
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/profil" className="flex items-center text-[#cccccc] hover:text-white">
+                      <FaUser className="mr-2" />
+                      Můj profil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/tickety" className="flex items-center text-[#cccccc] hover:text-white">
+                      <FaTicketAlt className="mr-2" />
+                      Tickety
+                    </Link>
+                  </DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator className="bg-[#ff3333]/20" />
+                      <DropdownMenuItem asChild className="cursor-pointer">
+                        <Link to="/admin" className="flex items-center text-[#ff3333] hover:text-[#ff6666]">
+                          <FaUserShield className="mr-2" />
+                          Admin Panel
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  <DropdownMenuSeparator className="bg-[#ff3333]/20" />
+                  <DropdownMenuItem
+                    onClick={signOut}
+                    className="text-[#cccccc] hover:text-white cursor-pointer"
+                  >
+                    <FaSignOutAlt className="mr-2" />
+                    Odhlásit se
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : discordUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <motion.button
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-[#1a1a1a] hover:bg-[#222222] transition-all"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={discordUser.discord_avatar || undefined} />
+                      <AvatarFallback className="bg-[#ff3333] text-white">
+                        {discordUser.discord_username.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-[#cccccc] font-semibold hidden md:inline">
+                      @{discordUser.discord_username}
                     </span>
                   </motion.button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20">
                   <DropdownMenuItem
-                    onClick={logout}
+                    onClick={discordLogout}
                     className="text-[#cccccc] hover:text-white cursor-pointer"
                   >
                     <FaSignOutAlt className="mr-2" />

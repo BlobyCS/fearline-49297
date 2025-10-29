@@ -12,6 +12,11 @@ import Recruitment from "./pages/Recruitment";
 import NotFound from "./pages/NotFound";
 import DiscordAuth from "./pages/DiscordAuth";
 import DiscordCallback from "./pages/DiscordCallback";
+import Auth from "./pages/Auth";
+import Tickets from "./pages/Tickets";
+import AdminPanel from "./pages/AdminPanel";
+import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -22,13 +27,17 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/auth" element={<DiscordAuth />} />
+          <Route path="/discord-auth" element={<DiscordAuth />} />
           <Route path="/auth/callback" element={<DiscordCallback />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/pravidla" element={<Layout><Rules /></Layout>} />
           <Route path="/ateam" element={<Layout><ATeam /></Layout>} />
           <Route path="/vip" element={<Layout><VIP /></Layout>} />
           <Route path="/nabor" element={<Layout><Recruitment /></Layout>} />
+          <Route path="/tickety" element={<Layout><ProtectedRoute><Tickets /></ProtectedRoute></Layout>} />
+          <Route path="/profil" element={<Layout><ProtectedRoute><Profile /></ProtectedRoute></Layout>} />
+          <Route path="/admin" element={<Layout><ProtectedRoute requireAdmin><AdminPanel /></ProtectedRoute></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
