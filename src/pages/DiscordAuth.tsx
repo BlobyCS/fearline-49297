@@ -40,7 +40,7 @@ const DiscordAuth = () => {
 
   const handleLogin = () => {
     const clientId = "1266090505117372570";
-    const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback`);
+    const redirectUri = encodeURIComponent(`${window.location.origin}/#/auth/callback`);
     const scope = "identify";
     
     const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;

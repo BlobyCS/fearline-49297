@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Rules from "./pages/Rules";
@@ -25,7 +25,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/discord-auth" element={<DiscordAuth />} />
           <Route path="/auth/callback" element={<DiscordCallback />} />
@@ -40,7 +40,7 @@ const App = () => (
           <Route path="/admin" element={<Layout><ProtectedRoute requireAdmin><AdminPanel /></ProtectedRoute></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
