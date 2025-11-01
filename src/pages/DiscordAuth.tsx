@@ -16,21 +16,33 @@ const DiscordAuth = () => {
     if (code) {
       handleCallback(code);
     }
-  }, [searchParams]);
+  }, [searchParams, login, navigate]);
 
   const handleCallback = async (code: string) => {
     try {
-      const { data, error } = await supabase.functions.invoke('discord-auth', {
-        body: {},
-        method: 'GET',
-      });
+      const redirectUri = `${window.location.origin}/#/discord-auth`;
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/discord-auth?code=${code}&redirect_uri=${encodeURIComponent(redirectUri)}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error('Failed to authenticate');
+      }
+
+      const data = await response.json();
 
       if (data.success && data.session) {
         login(data.session);
         toast.success(`Přihlášen jako @${data.session.discord_username}!`);
         navigate('/');
+      } else {
+        throw new Error('Invalid response from server');
       }
     } catch (error) {
       console.error('Discord auth error:', error);
@@ -40,13 +52,35 @@ const DiscordAuth = () => {
 
   const handleLogin = () => {
     const clientId = "1266090505117372570";
-    const redirectUri = encodeURIComponent(`${window.location.origin}/#/auth/callback`);
+    const redirectUri = encodeURIComponent(`${window.location.origin}/#/discord-auth`);
     const scope = "identify";
     
     const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
     
     window.location.href = authUrl;
   };
+
+  // Show loading state when processing callback
+  if (searchParams.get('code')) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="inline-block mb-4"
+          >
+            <FaDiscord className="text-6xl text-[#5865F2]" />
+          </motion.div>
+          <p className="text-xl text-[#cccccc]">Přihlašuji...</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
