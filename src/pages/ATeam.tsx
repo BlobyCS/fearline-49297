@@ -7,9 +7,11 @@ import thedizAvatar from "@/assets/team/thediz.png";
 import tomiokladaAvatar from "@/assets/team/tomioklada.png";
 import matyAvatar from "@/assets/team/maty.jpg";
 import sasha978901Avatar from "@/assets/team/sasha978901.jpg";
+import bednqggAvatar from "@/assets/team/bednqgg.png";
+import kuciikAvatar from "@/assets/team/kuciik.png";
 
 const ATeam = () => {
-  const teamMembers = [
+  const owners = [
     {
       name: "BlobyCZ",
       role: "Majitel",
@@ -26,6 +28,28 @@ const ATeam = () => {
       avatar: thedizAvatar,
       description: "Spoluzakladatel a technický správce",
     },
+  ];
+
+  const developers = [
+    {
+      name: "BednqGG",
+      role: "Developer",
+      roleColor: "bg-gradient-to-r from-purple-600 to-purple-700",
+      icon: FaCode,
+      avatar: bednqggAvatar,
+      description: "Vyvíjí a vylepšuje vlastní skripty",
+    },
+    {
+      name: "Kuciik",
+      role: "Developer",
+      roleColor: "bg-gradient-to-r from-purple-600 to-purple-700",
+      icon: FaCode,
+      avatar: kuciikAvatar,
+      description: "Vyvíjí a vylepšuje vlastní skripty",
+    },
+  ];
+
+  const helpers = [
     {
       name: "Tomioklada",
       role: "Helper",
@@ -105,55 +129,190 @@ const ATeam = () => {
           </p>
         </motion.div>
 
-        {/* Team Members */}
-        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto mb-20">
-          {teamMembers.map((member, index) => {
-            const Icon = member.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="glass-strong rounded-3xl p-10 text-center space-y-6 hover:shadow-2xl transition-all duration-300 group"
-              >
+        {/* Owners Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-20"
+        >
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
+            <span className="text-gradient">Majitelé</span>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            {owners.map((member, index) => {
+              const Icon = member.icon;
+              return (
                 <motion.div
-                  className="relative mx-auto w-40 h-40"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.4 }}
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="glass-strong rounded-3xl p-10 text-center space-y-6 hover:shadow-2xl transition-all duration-300 group"
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-accent opacity-30 group-hover:opacity-50 blur-xl transition-opacity" />
-                  <img
-                    src={member.avatar}
-                    alt={member.name}
-                    className="w-full h-full rounded-full border-4 border-primary/30 object-cover relative z-10 shadow-2xl"
-                  />
                   <motion.div
-                    className="absolute -bottom-3 -right-3 w-14 h-14 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center z-20 shadow-lg"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
+                    className="relative mx-auto w-40 h-40"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <Icon className="text-white text-2xl" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-600 to-red-700 opacity-30 group-hover:opacity-50 blur-xl transition-opacity" />
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      className="w-full h-full rounded-full border-4 border-red-600/30 object-cover relative z-10 shadow-2xl"
+                    />
+                    <motion.div
+                      className="absolute -bottom-3 -right-3 w-14 h-14 rounded-full bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center z-20 shadow-lg"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Icon className="text-white text-2xl" />
+                    </motion.div>
                   </motion.div>
-                </motion.div>
 
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-black">{member.name}</h3>
-                  <Badge
-                    className={`${member.roleColor} text-white px-6 py-2 text-base font-bold shadow-lg`}
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-black">{member.name}</h3>
+                    <Badge
+                      className={`${member.roleColor} text-white px-6 py-2 text-base font-bold shadow-lg`}
+                    >
+                      <Icon className="mr-2" />
+                      {member.role}
+                    </Badge>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {member.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Developers Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-20"
+        >
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
+            <span className="text-gradient">Developeři</span>
+          </h2>
+          <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            {developers.map((member, index) => {
+              const Icon = member.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="glass-strong rounded-3xl p-10 text-center space-y-6 hover:shadow-2xl transition-all duration-300 group"
+                >
+                  <motion.div
+                    className="relative mx-auto w-40 h-40"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <Icon className="mr-2" />
-                    {member.role}
-                  </Badge>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {member.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 opacity-30 group-hover:opacity-50 blur-xl transition-opacity" />
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      className="w-full h-full rounded-full border-4 border-purple-600/30 object-cover relative z-10 shadow-2xl"
+                    />
+                    <motion.div
+                      className="absolute -bottom-3 -right-3 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center z-20 shadow-lg"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Icon className="text-white text-2xl" />
+                    </motion.div>
+                  </motion.div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-black">{member.name}</h3>
+                    <Badge
+                      className={`${member.roleColor} text-white px-6 py-2 text-base font-bold shadow-lg`}
+                    >
+                      <Icon className="mr-2" />
+                      {member.role}
+                    </Badge>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {member.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Helpers Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-20"
+        >
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
+            <span className="text-gradient">Pomocníci</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            {helpers.map((member, index) => {
+              const Icon = member.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="glass-strong rounded-3xl p-10 text-center space-y-6 hover:shadow-2xl transition-all duration-300 group"
+                >
+                  <motion.div
+                    className="relative mx-auto w-40 h-40"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-600 to-green-700 opacity-30 group-hover:opacity-50 blur-xl transition-opacity" />
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      className="w-full h-full rounded-full border-4 border-green-600/30 object-cover relative z-10 shadow-2xl"
+                    />
+                    <motion.div
+                      className="absolute -bottom-3 -right-3 w-14 h-14 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center z-20 shadow-lg"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Icon className="text-white text-2xl" />
+                    </motion.div>
+                  </motion.div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-3xl font-black">{member.name}</h3>
+                    <Badge
+                      className={`${member.roleColor} text-white px-6 py-2 text-base font-bold shadow-lg`}
+                    >
+                      <Icon className="mr-2" />
+                      {member.role}
+                    </Badge>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {member.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
 
         {/* Roles Section */}
         <motion.div
