@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import blobyczAvatar from "@/assets/team/blobycz.webp";
 import thedizAvatar from "@/assets/team/thediz.png";
 import tomiokladaAvatar from "@/assets/team/tomioklada.png";
-import matyAvatar from "@/assets/team/maty.jpg";
-import sasha978901Avatar from "@/assets/team/sasha978901.jpg";
 import bednqggAvatar from "@/assets/team/bednqgg.png";
 import kuciikAvatar from "@/assets/team/kuciik.png";
 
@@ -56,22 +54,6 @@ const ATeam = () => {
       roleColor: "bg-gradient-to-r from-green-600 to-green-700",
       icon: FaHeadset,
       avatar: tomiokladaAvatar,
-      description: "Pomáhá hráčům s jejich dotazy",
-    },
-    {
-      name: "Maty",
-      role: "Helper",
-      roleColor: "bg-gradient-to-r from-green-600 to-green-700",
-      icon: FaHeadset,
-      avatar: matyAvatar,
-      description: "Pomáhá hráčům s jejich dotazy",
-    },
-    {
-      name: "Sasha978901",
-      role: "Helper",
-      roleColor: "bg-gradient-to-r from-green-600 to-green-700",
-      icon: FaHeadset,
-      avatar: sasha978901Avatar,
       description: "Pomáhá hráčům s jejich dotazy",
     },
   ];
@@ -263,7 +245,7 @@ const ATeam = () => {
           <h2 className="text-4xl md:text-5xl font-black text-center mb-12">
             <span className="text-gradient">Pomocníci</span>
           </h2>
-          <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-10 max-w-md mx-auto">
             {helpers.map((member, index) => {
               const Icon = member.icon;
               return (
