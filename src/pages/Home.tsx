@@ -6,7 +6,7 @@ import losSantosBg from "@/assets/los-santos-bg.jpg";
 import logo from "@/assets/logo.png";
 
 const Home = () => {
-  const connectLink = "fivem://connect/fivem.fearline.eu:30120";
+  const connectLink = "fivem://connect/join.fearline.eu:25576";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(connectLink);
