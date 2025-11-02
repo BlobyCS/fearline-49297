@@ -20,7 +20,7 @@ const DiscordAuth = () => {
 
   const handleCallback = async (code: string) => {
     try {
-      const redirectUri = `${window.location.origin}/#/auth/callback`;
+      const redirectUri = 'https://fearline.eu/#/auth/callback';
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/discord-auth?code=${code}&redirect_uri=${encodeURIComponent(redirectUri)}`,
         {
@@ -52,7 +52,7 @@ const DiscordAuth = () => {
 
   const handleLogin = () => {
     const clientId = "1266090505117372570";
-    const redirectUri = encodeURIComponent(`${window.location.origin}/#/auth/callback`);
+    const redirectUri = encodeURIComponent('https://fearline.eu/#/auth/callback');
     const scope = "identify";
     
     const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;

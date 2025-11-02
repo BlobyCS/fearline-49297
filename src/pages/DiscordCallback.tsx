@@ -21,7 +21,7 @@ const DiscordCallback = () => {
       }
 
       try {
-        const redirectUri = `${window.location.origin}/#/auth/callback`;
+        const redirectUri = 'https://fearline.eu/#/auth/callback';
         // Call edge function with the code and redirect_uri
         const response = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/discord-auth?code=${code}&redirect_uri=${encodeURIComponent(redirectUri)}`,
