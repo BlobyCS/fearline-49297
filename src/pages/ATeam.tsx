@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaCrown, FaCode, FaHeadset, FaShieldAlt } from "react-icons/fa";
+import { FaInstagram, FaGithub, FaDiscord, FaEnvelope } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import blobyczAvatar from "@/assets/team/blobycz.webp";
@@ -17,6 +18,12 @@ const ATeam = () => {
       icon: FaCrown,
       avatar: blobyczAvatar,
       description: "Zakladatel a hlavní admin serveru",
+      contacts: {
+        email: "michal@bloby.eu",
+        instagram: "@blobycz",
+        github: "Bloby22",
+        discord: "@blobycz",
+      },
     },
     {
       name: "TheDiz",
@@ -25,6 +32,9 @@ const ATeam = () => {
       icon: FaCrown,
       avatar: thedizAvatar,
       description: "Spoluzakladatel a technický správce",
+      contacts: {
+        email: "diz@fearline.eu",
+      },
     },
   ];
 
@@ -36,6 +46,11 @@ const ATeam = () => {
       icon: FaCode,
       avatar: bednqggAvatar,
       description: "Vyvíjí a vylepšuje vlastní skripty",
+      contacts: {
+        email: "filipbenda32@seznam.cz",
+        instagram: "BednqGG",
+        discord: "@_.bedna._",
+      },
     },
     {
       name: "Kuciik",
@@ -44,6 +59,10 @@ const ATeam = () => {
       icon: FaCode,
       avatar: kuciikAvatar,
       description: "Vyvíjí a vylepšuje vlastní skripty",
+      contacts: {
+        email: "kcr.com@email.cz",
+        discord: "@majkyc_",
+      },
     },
   ];
 
@@ -165,6 +184,50 @@ const ATeam = () => {
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {member.description}
                     </p>
+                    {member.contacts && (
+                      <div className="flex flex-wrap gap-3 justify-center mt-4">
+                        {member.contacts.email && (
+                          <a
+                            href={`mailto:${member.contacts.email}`}
+                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                            title="Email"
+                          >
+                            <FaEnvelope className="text-lg" />
+                          </a>
+                        )}
+                        {member.contacts.instagram && (
+                          <a
+                            href={`https://instagram.com/${member.contacts.instagram.replace('@', '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                            title="Instagram"
+                          >
+                            <FaInstagram className="text-lg" />
+                          </a>
+                        )}
+                        {member.contacts.github && (
+                          <a
+                            href={`https://github.com/${member.contacts.github}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                            title="GitHub"
+                          >
+                            <FaGithub className="text-lg" />
+                          </a>
+                        )}
+                        {member.contacts.discord && (
+                          <span
+                            className="flex items-center gap-2 text-sm text-muted-foreground"
+                            title="Discord"
+                          >
+                            <FaDiscord className="text-lg" />
+                            <span className="text-xs">{member.contacts.discord}</span>
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
