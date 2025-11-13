@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaCrown, FaCode, FaHeadset, FaShieldAlt } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaInstagram, FaEnvelope } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import blobyczAvatar from "@/assets/team/blobycz.webp";
@@ -17,6 +18,10 @@ const ATeam = () => {
       icon: FaCrown,
       avatar: blobyczAvatar,
       description: "Zakladatel a hlavní admin serveru",
+      email: "michal@bloby.eu",
+      instagram: "blobycz",
+      github: "Bloby22",
+      discord: "1178258199590228078",
     },
     {
       name: "TheDiz",
@@ -25,6 +30,7 @@ const ATeam = () => {
       icon: FaCrown,
       avatar: thedizAvatar,
       description: "Spoluzakladatel a technický správce",
+      email: "diz@fearline.eu",
     },
   ];
 
@@ -36,6 +42,9 @@ const ATeam = () => {
       icon: FaCode,
       avatar: bednqggAvatar,
       description: "Vyvíjí a vylepšuje vlastní skripty",
+      email: "filipbenda32@seznam.cz",
+      github: "BednqGG",
+      discord: "1295789713818517575",
     },
     {
       name: "Kuciik",
@@ -44,6 +53,8 @@ const ATeam = () => {
       icon: FaCode,
       avatar: kuciikAvatar,
       description: "Vyvíjí a vylepšuje vlastní skripty",
+      email: "kcr.com@email.cz",
+      discord: "1064215350390042644",
     },
   ];
 
@@ -165,6 +176,48 @@ const ATeam = () => {
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {member.description}
                     </p>
+                    <div className="flex justify-center gap-3 pt-2">
+                      {member.email && (
+                        <a
+                          href={`mailto:${member.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <FaEnvelope className="text-xl" />
+                        </a>
+                      )}
+                      {member.instagram && (
+                        <a
+                          href={`https://instagram.com/${member.instagram}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <FaInstagram className="text-xl" />
+                        </a>
+                      )}
+                      {member.discord && (
+                        <a
+                          href={`https://discord.com/users/${member.discord}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <FaDiscord className="text-xl" />
+                        </a>
+                      )}
+                      {member.github && (
+                        <a
+                          href={`https://github.com/${member.github}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <FaGithub className="text-xl" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               );
