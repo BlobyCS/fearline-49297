@@ -38,6 +38,8 @@ const Auth = () => {
         }
       } else {
         toast.success("Úspěšně přihlášen!");
+        setEmail("");
+        setPassword("");
         navigate("/");
       }
     } catch (err) {
@@ -66,6 +68,8 @@ const Auth = () => {
         }
       } else {
         toast.success("Registrace úspěšná! Můžete se přihlásit.");
+        setEmail("");
+        setPassword("");
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
