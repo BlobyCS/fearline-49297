@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Plus, MessageSquare } from "lucide-react";
 
 interface Ticket {
@@ -28,7 +29,8 @@ interface TicketMessage {
   created_at: string;
   user_id: string;
   profiles: {
-    discord_username: string;
+    display_name: string | null;
+    avatar_url: string | null;
   };
 }
 
@@ -116,15 +118,24 @@ const Tickets = () => {
     const userIds = [...new Set(messagesData.map(m => m.user_id))];
     const { data: profilesData } = await supabase
       .from('profiles')
-      .select('id, discord_username')
+      .select('*')
       .in('id', userIds);
 
-    const profilesMap = new Map(profilesData?.map(p => [p.id, p.discord_username]) || []);
+    const profilesMap = new Map(
+      profilesData?.map((p: any) => [
+        p.id, 
+        { 
+          display_name: p.display_name, 
+          avatar_url: p.avatar_url 
+        }
+      ]) || []
+    );
 
     const messagesWithProfiles = messagesData.map(msg => ({
       ...msg,
       profiles: {
-        discord_username: profilesMap.get(msg.user_id) || 'Uživatel'
+        display_name: profilesMap.get(msg.user_id)?.display_name || null,
+        avatar_url: profilesMap.get(msg.user_id)?.avatar_url || null
       }
     }));
 
@@ -341,15 +352,25 @@ const Tickets = () => {
                         msg.user_id === user?.id ? 'bg-primary/10 ml-8' : 'bg-muted mr-8'
                       }`}
                     >
-                      <div className="flex justify-between items-start mb-1">
+                  <div className="flex gap-2 items-start mb-1">
+                    <Avatar className="h-6 w-6">
+                      <AvatarImage src={msg.profiles?.avatar_url || undefined} />
+                      <AvatarFallback className="text-xs">
+                        {(msg.profiles?.display_name || 'U')[0].toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
                         <span className="font-semibold text-sm">
-                          {msg.profiles?.discord_username || 'Uživatel'}
+                          {msg.profiles?.display_name || 'Uživatel'}
                         </span>
                         <span className="text-xs text-muted-foreground">
                           {new Date(msg.created_at).toLocaleString('cs-CZ')}
                         </span>
                       </div>
-                      <p className="text-sm">{msg.message}</p>
+                      <p className="text-sm mt-1">{msg.message}</p>
+                    </div>
+                  </div>
                     </div>
                   ))}
                 </div>
