@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SpotifyCallback = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState("processing");
-  const [error, setError] = useState(null);
+  const [status, setStatus] = useState<"processing" | "success" | "error">("processing");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const code = searchParams.get("code");
@@ -14,14 +13,12 @@ const SpotifyCallback = () => {
     if (errorParam) {
       setStatus("error");
       setError(errorParam);
-      setTimeout(() => navigate("/"), 3000);
       return;
     }
 
     if (!code) {
       setStatus("error");
       setError("Missing authorization code");
-      setTimeout(() => navigate("/"), 3000);
       return;
     }
 
@@ -45,7 +42,6 @@ const SpotifyCallback = () => {
 
         if (data.success) {
           setStatus("success");
-          setTimeout(() => navigate("/"), 2000);
         } else {
           throw new Error(data.error || "Unknown error");
         }
@@ -53,13 +49,12 @@ const SpotifyCallback = () => {
       } catch (err) {
         console.error("Callback error:", err);
         setStatus("error");
-        setError(err.message);
-        setTimeout(() => navigate("/"), 3000);
+        setError(err instanceof Error ? err.message : "Unknown error");
       }
     };
 
     exchangeCode();
-  }, [searchParams, navigate]);
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
@@ -80,14 +75,17 @@ const SpotifyCallback = () => {
           <>
             <div className="text-6xl mb-4">✅</div>
             <h1 className="text-2xl font-bold text-foreground mb-4">
-              Úspěch!
+              Tracker běží!
             </h1>
-            <p className="text-muted-foreground">
-              Spotify tracking je připraven
+            <p className="text-muted-foreground mb-4">
+              Spotify tracking je nyní aktivní.
             </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Přesměrování...
+            <p className="text-sm text-muted-foreground">
+              Podívejte se do terminálu pro statistiky:
             </p>
+            <code className="text-xs bg-muted px-3 py-2 rounded mt-2 inline-block">
+              http://localhost:3000
+            </code>
           </>
         )}
 
@@ -97,11 +95,11 @@ const SpotifyCallback = () => {
             <h1 className="text-2xl font-bold text-foreground mb-4">
               Chyba
             </h1>
-            <p className="text-muted-foreground mb-2">
+            <p className="text-muted-foreground mb-4">
               {error || "Něco se pokazilo"}
             </p>
             <p className="text-sm text-muted-foreground">
-              Přesměrování...
+              Zkuste to prosím znovu.
             </p>
           </>
         )}
