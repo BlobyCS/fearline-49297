@@ -5,9 +5,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { UserCircle, Calendar, Shield, Ticket } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { UserCircle, Calendar, Shield, Ticket, Upload } from "lucide-react";
+import { toast } from "sonner";
 
 interface ProfileData {
+  display_name: string | null;
+  avatar_url: string | null;
   discord_username: string;
   discord_avatar: string | null;
   created_at: string;
@@ -15,9 +21,12 @@ interface ProfileData {
 
 const Profile = () => {
   const { user, userRole } = useAuth();
-  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [profile, setProfile] = useState<any>(null);
   const [ticketCount, setTicketCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [displayName, setDisplayName] = useState("");
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     fetchProfile();
@@ -35,6 +44,8 @@ const Profile = () => {
 
     if (!error && data) {
       setProfile(data);
+      setDisplayName((data as any).display_name || "");
+      setIsEditingName(!(data as any).display_name);
     }
     setIsLoading(false);
   };
@@ -48,6 +59,90 @@ const Profile = () => {
       .eq('user_id', user.id);
 
     setTicketCount(count || 0);
+  };
+
+  const handleUpdateDisplayName = async () => {
+    if (!user || !displayName.trim()) {
+      toast.error("Jméno nesmí být prázdné");
+      return;
+    }
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({ display_name: displayName.trim() } as any)
+      .eq('id', user.id);
+
+    if (error) {
+      toast.error("Chyba při ukládání jména");
+    } else {
+      toast.success("Jméno uloženo");
+      setIsEditingName(false);
+      fetchProfile();
+    }
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!user || !e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+    
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Soubor je příliš velký (max 2MB)");
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error("Soubor musí být obrázek");
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      // Delete old avatar if exists
+      if (profile?.avatar_url) {
+        const oldPath = profile.avatar_url.split('/').pop();
+        if (oldPath) {
+          await supabase.storage
+            .from('avatars')
+            .remove([`${user.id}/${oldPath}`]);
+        }
+      }
+
+      // Upload new avatar
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${user.id}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl } as any)
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      toast.success("Profilová fotka nahrána");
+      fetchProfile();
+    } catch (error) {
+      toast.error("Chyba při nahrávání fotky");
+      console.error(error);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const getRoleBadgeColor = (role: string) => {
@@ -78,15 +173,28 @@ const Profile = () => {
         <Card className="md:col-span-2">
           <CardHeader>
             <div className="flex items-center gap-4">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={profile?.discord_avatar || undefined} />
-                <AvatarFallback>
-                  <UserCircle className="h-12 w-12" />
-                </AvatarFallback>
-              </Avatar>
-              <div>
+              <div className="relative">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage src={profile?.avatar_url || profile?.discord_avatar || undefined} />
+                  <AvatarFallback>
+                    <UserCircle className="h-12 w-12" />
+                  </AvatarFallback>
+                </Avatar>
+                <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-1 cursor-pointer hover:bg-primary/90 transition-colors">
+                  <Upload className="h-4 w-4" />
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarUpload}
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              <div className="flex-1">
                 <CardTitle className="text-2xl">
-                  {profile?.discord_username || user?.email || 'Uživatel'}
+                  {profile?.display_name || profile?.discord_username || user?.email || 'Uživatel'}
                 </CardTitle>
                 <CardDescription className="flex items-center gap-2 mt-1">
                   <Shield className="h-4 w-4" />
@@ -98,6 +206,30 @@ const Profile = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Separator />
+            
+            {/* Display Name Section */}
+            {(!profile?.display_name || isEditingName) && (
+              <div className="space-y-2">
+                <Label htmlFor="display-name">Zobrazované jméno</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="display-name"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="Zadejte své jméno"
+                    maxLength={50}
+                  />
+                  <Button onClick={handleUpdateDisplayName}>
+                    Uložit
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Toto jméno se bude zobrazovat v ticketech místo emailu
+                </p>
+              </div>
+            )}
+
             <Separator />
             
             <div className="space-y-2">
