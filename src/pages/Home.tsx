@@ -250,7 +250,7 @@ const Home = () => {
                 className="bg-[#5865F2] hover:bg-[#4752C4] text-white px-12 py-8 text-xl rounded-2xl shadow-[0_0_40px_rgba(88,101,242,0.5)] hover:shadow-[0_0_60px_rgba(88,101,242,0.7)] transition-all duration-300 font-bold"
               >
                 <a
-                  href="https://discord.gg/fearline"
+                  href="https://discord.gg/4MAgM4RgTG"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3"

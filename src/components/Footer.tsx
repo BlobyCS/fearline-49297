@@ -20,7 +20,7 @@ const Footer = () => {
           </motion.div>
 
           <motion.a
-            href="https://discord.gg/2X8YFkcTRt"
+            href="https://discord.gg/4MAgM4RgTG"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-3 px-8 py-4 rounded-xl bg-[#5865F2] text-white hover:bg-[#4752C4] transition-all font-bold shadow-[0_0_30px_rgba(88,101,242,0.3)] hover:shadow-[0_0_40px_rgba(88,101,242,0.5)]"

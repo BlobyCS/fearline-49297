@@ -77,7 +77,7 @@ const Navbar = () => {
             })}
             
             <motion.a
-              href="https://discord.gg/2X8YFkcTRt"
+              href="https://discord.gg/4MAgM4RgTG"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-[#5865F2] text-white hover:bg-[#4752C4] transition-all font-semibold shadow-[0_0_15px_rgba(88,101,242,0.3)] hover:shadow-[0_0_25px_rgba(88,101,242,0.5)]"
