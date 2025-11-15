@@ -12,6 +12,7 @@ import Recruitment from "./pages/Recruitment";
 import NotFound from "./pages/NotFound";
 import DiscordAuth from "./pages/DiscordAuth";
 import DiscordCallback from "./pages/DiscordCallback";
+import SpotifyCallback from "./pages/SpotifyCallback";
 
 import Auth from "./pages/Auth";
 import Tickets from "./pages/Tickets";
@@ -30,7 +31,7 @@ const App = () => (
         <Routes>
           <Route path="/discord-auth" element={<DiscordAuth />} />
           <Route path="/auth/callback" element={<DiscordCallback />} />
-          
+          <Route path="/spotify/callback" element={<SpotifyCallback />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/pravidla" element={<Layout><Rules /></Layout>} />
