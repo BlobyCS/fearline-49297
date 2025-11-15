@@ -42,9 +42,13 @@ const SpotifyCallback = () => {
 
         if (data.success) {
           setStatus("success");
+          setTimeout(() => {
+            window.location.href = 'http://localhost:3000';
+          }, 2000);
         } else {
           throw new Error(data.error || "Unknown error");
         }
+
       } catch (err) {
         console.error("Callback error:", err);
         setStatus("error");
@@ -74,10 +78,10 @@ const SpotifyCallback = () => {
           <>
             <div className="text-6xl mb-4">✅</div>
             <h1 className="text-2xl font-bold text-foreground mb-4">
-              Úspěch! Tracker nyní běží.
+              Úspěch!
             </h1>
             <p className="text-muted-foreground mb-4">
-              Podívejte se do terminálu pro statistiky.
+              Tracker nyní běží. Přesměrování...
             </p>
             <code className="text-xs bg-muted px-3 py-2 rounded mt-2 inline-block">
               http://localhost:3000
@@ -103,5 +107,4 @@ const SpotifyCallback = () => {
     </div>
   );
 };
-
 export default SpotifyCallback;
