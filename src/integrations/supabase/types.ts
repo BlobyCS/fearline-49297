@@ -52,26 +52,32 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           discord_avatar: string | null
           discord_id: string | null
           discord_username: string | null
+          display_name: string | null
           id: string
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           discord_avatar?: string | null
           discord_id?: string | null
           discord_username?: string | null
+          display_name?: string | null
           id: string
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           discord_avatar?: string | null
           discord_id?: string | null
           discord_username?: string | null
+          display_name?: string | null
           id?: string
           updated_at?: string
         }
