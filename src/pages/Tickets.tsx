@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Plus, MessageSquare } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Ticket {
   id: string;
@@ -224,173 +225,182 @@ const Tickets = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Ticket Systém</h1>
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Nový Ticket
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Vytvořit nový ticket</DialogTitle>
-              <DialogDescription>
-                Popište váš problém nebo dotaz
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleCreateTicket} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="title">Název</Label>
-                <Input
-                  id="title"
-                  value={newTicket.title}
-                  onChange={(e) => setNewTicket({ ...newTicket, title: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description">Popis</Label>
-                <Textarea
-                  id="description"
-                  value={newTicket.description}
-                  onChange={(e) => setNewTicket({ ...newTicket, description: e.target.value })}
-                  rows={4}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="priority">Priorita</Label>
-                <Select
-                  value={newTicket.priority}
-                  onValueChange={(value) => setNewTicket({ ...newTicket, priority: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="low">Nízká</SelectItem>
-                    <SelectItem value="normal">Normální</SelectItem>
-                    <SelectItem value="high">Vysoká</SelectItem>
-                    <SelectItem value="urgent">Urgentní</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button type="submit" className="w-full">Vytvořit</Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Moje Tickety</h2>
-          {isLoading ? (
-            <div className="text-center py-8">Načítání...</div>
-          ) : tickets.length === 0 ? (
-            <Card>
-              <CardContent className="pt-6 text-center text-muted-foreground">
-                Zatím nemáte žádné tickety
-              </CardContent>
-            </Card>
-          ) : (
-            tickets.map((ticket) => (
-              <Card 
-                key={ticket.id}
-                className={`cursor-pointer transition-colors ${selectedTicket?.id === ticket.id ? 'border-primary' : ''}`}
-                onClick={() => setSelectedTicket(ticket)}
-              >
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg">{ticket.title}</CardTitle>
-                    <div className="flex gap-2">
-                      <Badge className={getPriorityColor(ticket.priority)}>
-                        {ticket.priority}
-                      </Badge>
-                      <Badge className={getStatusColor(ticket.status)}>
-                        {ticket.status}
-                      </Badge>
-                    </div>
+      <div className="flex flex-col lg:flex-row gap-6 max-h-[calc(100vh-12rem)]">
+        {/* Left side - Tickets list */}
+        <div className="w-full lg:w-1/3">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-3xl font-bold text-foreground">Tickety</h1>
+            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Nový ticket
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Vytvořit nový ticket</DialogTitle>
+                  <DialogDescription>
+                    Vyplňte informace o vašem problému nebo dotazu
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleCreateTicket} className="space-y-4">
+                  <div>
+                    <Label htmlFor="title">Nadpis</Label>
+                    <Input
+                      id="title"
+                      value={newTicket.title}
+                      onChange={(e) => setNewTicket({...newTicket, title: e.target.value})}
+                      required
+                    />
                   </div>
-                  <CardDescription>{ticket.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))
-          )}
-        </div>
-
-        <div>
-          {selectedTicket ? (
-            <Card className="h-[600px] flex flex-col">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <CardTitle>{selectedTicket.title}</CardTitle>
-                  {isAdmin && (
-                    <Select
-                      value={selectedTicket.status}
-                      onValueChange={(value) => handleStatusChange(selectedTicket.id, value)}
+                  <div>
+                    <Label htmlFor="description">Popis</Label>
+                    <Textarea
+                      id="description"
+                      value={newTicket.description}
+                      onChange={(e) => setNewTicket({...newTicket, description: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="priority">Priorita</Label>
+                    <Select 
+                      value={newTicket.priority}
+                      onValueChange={(value) => setNewTicket({...newTicket, priority: value})}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="open">Open</SelectItem>
-                        <SelectItem value="in_progress">In Progress</SelectItem>
-                        <SelectItem value="closed">Closed</SelectItem>
+                        <SelectItem value="low">Nízká</SelectItem>
+                        <SelectItem value="normal">Normální</SelectItem>
+                        <SelectItem value="high">Vysoká</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-                  {messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={`p-3 rounded-lg ${
-                        msg.user_id === user?.id ? 'bg-primary/10 ml-8' : 'bg-muted mr-8'
-                      }`}
-                    >
-                  <div className="flex gap-2 items-start mb-1">
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage src={msg.profiles?.avatar_url || undefined} />
-                      <AvatarFallback className="text-xs">
-                        {(msg.profiles?.display_name || 'U')[0].toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <span className="font-semibold text-sm">
-                          {msg.profiles?.display_name || 'Uživatel'}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(msg.created_at).toLocaleString('cs-CZ')}
-                        </span>
-                      </div>
-                      <p className="text-sm mt-1">{msg.message}</p>
-                    </div>
                   </div>
+                  <Button type="submit" className="w-full">Vytvořit ticket</Button>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <ScrollArea className="h-[calc(100vh-16rem)]">
+            <div className="space-y-3 pr-4">
+              {isLoading ? (
+                <p className="text-muted-foreground">Načítání...</p>
+              ) : tickets.length === 0 ? (
+                <p className="text-muted-foreground">Žádné tickety</p>
+              ) : (
+                tickets.map((ticket) => (
+                  <Card 
+                    key={ticket.id} 
+                    className={`cursor-pointer transition-colors ${
+                      selectedTicket?.id === ticket.id ? 'border-primary' : ''
+                    }`}
+                    onClick={() => setSelectedTicket(ticket)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between">
+                        <CardTitle className="text-base">{ticket.title}</CardTitle>
+                        <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <div className="flex gap-2">
+                        <Badge variant="secondary" className={getPriorityColor(ticket.priority)}>
+                          {ticket.priority === 'low' ? 'Nízká' : ticket.priority === 'high' ? 'Vysoká' : 'Normální'}
+                        </Badge>
+                        <Badge className={getStatusColor(ticket.status)}>
+                          {ticket.status === 'open' ? 'Otevřený' : 
+                           ticket.status === 'in_progress' ? 'Zpracovává se' : 'Uzavřený'}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </ScrollArea>
+        </div>
+
+        {/* Right side - Conversation */}
+        <div className="w-full lg:w-2/3 flex flex-col">
+          {selectedTicket ? (
+            <>
+              <Card className="mb-4">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle>{selectedTicket.title}</CardTitle>
+                      <CardDescription className="mt-2">
+                        {selectedTicket.description}
+                      </CardDescription>
+                    </div>
+                    {isAdmin && (
+                      <Select 
+                        value={selectedTicket.status}
+                        onValueChange={(value) => handleStatusChange(selectedTicket.id, value)}
+                      >
+                        <SelectTrigger className="w-40">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="open">Otevřený</SelectItem>
+                          <SelectItem value="in_progress">Zpracovává se</SelectItem>
+                          <SelectItem value="closed">Uzavřený</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </div>
+                </CardHeader>
+              </Card>
+
+              <ScrollArea className="flex-1 mb-4 h-[calc(100vh-28rem)]">
+                <div className="space-y-4 pr-4">
+                  {messages.map((msg) => (
+                    <div key={msg.id} className="flex gap-3">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={msg.profiles?.avatar_url || undefined} />
+                        <AvatarFallback>
+                          {msg.profiles?.display_name?.[0] || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-medium text-sm">
+                            {msg.profiles?.display_name || 'Uživatel'}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(msg.created_at).toLocaleString('cs-CZ')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-foreground mt-1">{msg.message}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <form onSubmit={handleSendMessage} className="flex gap-2">
-                  <Input
-                    placeholder="Napište zprávu..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    disabled={selectedTicket.status === 'closed'}
-                  />
-                  <Button type="submit" disabled={selectedTicket.status === 'closed'}>
-                    <MessageSquare className="h-4 w-4" />
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+              </ScrollArea>
+
+              <Card>
+                <CardContent className="pt-4">
+                  <form onSubmit={handleSendMessage} className="flex gap-2">
+                    <Input
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      placeholder="Napište zprávu..."
+                      required
+                    />
+                    <Button type="submit">Odeslat</Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </>
           ) : (
-            <Card className="h-[600px] flex items-center justify-center">
-              <CardContent className="text-center text-muted-foreground">
-                Vyberte ticket pro zobrazení konverzace
+            <Card className="flex items-center justify-center h-full">
+              <CardContent className="text-center py-12">
+                <MessageSquare className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">Vyberte ticket pro zobrazení konverzace</p>
               </CardContent>
             </Card>
           )}

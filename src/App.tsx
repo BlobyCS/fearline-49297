@@ -18,6 +18,7 @@ import Auth from "./pages/Auth";
 import Tickets from "./pages/Tickets";
 import AdminPanel from "./pages/AdminPanel";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/nabor" element={<Layout><Recruitment /></Layout>} />
           <Route path="/tickety" element={<Layout><ProtectedRoute><Tickets /></ProtectedRoute></Layout>} />
           <Route path="/profil" element={<Layout><ProtectedRoute><Profile /></ProtectedRoute></Layout>} />
+          <Route path="/nastaveni" element={<Layout><ProtectedRoute><Settings /></ProtectedRoute></Layout>} />
           <Route path="/admin" element={<Layout><ProtectedRoute requireAdmin><AdminPanel /></ProtectedRoute></Layout>} />
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
