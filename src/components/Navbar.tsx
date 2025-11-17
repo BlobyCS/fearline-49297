@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt, FaTicketAlt, FaUser, FaUserShield } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt, FaTicketAlt, FaUser, FaUserShield, FaCog } from "react-icons/fa";
 import logo from "@/assets/logo.png";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -119,6 +119,12 @@ const Navbar = () => {
                       Tickety
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/nastaveni" className="flex items-center text-[#cccccc] hover:text-white">
+                      <FaCog className="mr-2" />
+                      Nastavení
+                    </Link>
+                  </DropdownMenuItem>
                   {isAdmin && (
                     <>
                       <DropdownMenuSeparator className="bg-[#ff3333]/20" />
@@ -159,7 +165,14 @@ const Navbar = () => {
                     </span>
                   </motion.button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20">
+                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20 w-48">
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/nastaveni" className="flex items-center text-[#cccccc] hover:text-white">
+                      <FaCog className="mr-2" />
+                      Nastavení
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-[#ff3333]/20" />
                   <DropdownMenuItem
                     onClick={discordLogout}
                     className="text-[#cccccc] hover:text-white cursor-pointer"

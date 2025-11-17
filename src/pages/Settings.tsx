@@ -258,7 +258,7 @@ const Settings = () => {
                     <div>
                       <h3 className="font-medium">SMTP Konfigurace</h3>
                       <p className="text-sm text-muted-foreground">
-                        Server: smtp.seznam.cz | Port: 587
+                        Server: smtp.seznam.cz | Port: 587 | Email: no-reply@fearline.eu
                       </p>
                     </div>
                     <Button variant="outline">
