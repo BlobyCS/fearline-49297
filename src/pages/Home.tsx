@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { FaCopy, FaDiscord, FaGamepad, FaUsers, FaServer, FaCode, FaShieldAlt, FaRocket, FaHeart, FaTrophy, FaStar } from "react-icons/fa";
+import { FaCopy, FaDiscord, FaGamepad, FaShieldAlt, FaRocket } from "react-icons/fa";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import losSantosBg from "@/assets/los-santos-bg.jpg";
 import logo from "@/assets/logo.png";
 
@@ -42,33 +41,6 @@ const Home = () => {
       description: "Unikátní vlastní skripty vytvořené našim developerským týmem",
       color: "#ff3333",
       gradient: "from-red-600 to-pink-600",
-    },
-  ];
-
-  const stats = [
-    { label: "Aktivních hráčů", value: "0+", icon: FaUsers, color: "#ff3333" },
-    { label: "Vlastních scriptů", value: "2+", icon: FaCode, color: "#9933ff" },
-    { label: "Server uptime", value: "99.9%", icon: FaServer, color: "#33ff77" },
-  ];
-
-  const benefits = [
-    {
-      icon: FaHeart,
-      title: "Aktivní komunita",
-      description: "Přátelská komunita plná nadšenců pro RP",
-      color: "#ff3366",
-    },
-    {
-      icon: FaTrophy,
-      title: "Turnaje & Eventy",
-      description: "Pravidelné eventy s hodnotnými cenami",
-      color: "#ffaa33",
-    },
-    {
-      icon: FaStar,
-      title: "Progresivní systém",
-      description: "Rozvíjej svou postavu a sbírej achievementy",
-      color: "#33ccff",
     },
   ];
 
@@ -138,14 +110,6 @@ const Home = () => {
               <h1 className="text-7xl md:text-9xl font-black mb-6 text-gradient leading-tight">
                 FEARLINE
               </h1>
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <Badge className="bg-[#ff3333] text-white px-4 py-2 text-base font-bold">
-                  🔥 NOVÝ SERVER
-                </Badge>
-                <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 text-base font-bold">
-                  ✨ WHITELIST
-                </Badge>
-              </div>
               <p className="text-xl md:text-2xl text-[#cccccc] max-w-3xl mx-auto font-light">
                 Nejnovější FiveM RP server na CZ/SK scéně s vlastními skripty a unikátním konceptem
               </p>
@@ -265,6 +229,8 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
       {/* Discord CTA */}
       <section className="py-20 relative">
