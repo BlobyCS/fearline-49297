@@ -1,5 +1,17 @@
 import { motion } from "framer-motion";
-import { FaBook, FaGamepad, FaComments, FaDiscord, FaGavel } from "react-icons/fa";
+import { 
+  FaBook, 
+  FaGamepad, 
+  FaComments, 
+  FaDiscord, 
+  FaGavel,
+  FaSkull,
+  FaMask,
+  FaCar,
+  FaUsers,
+  FaShieldAlt,
+  FaDollarSign
+} from "react-icons/fa";
 import {
   Accordion,
   AccordionContent,
@@ -7,9 +19,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { IconType } from "react-icons";
+
+interface Rule {
+  title: string;
+  description: string;
+}
+
+interface RuleCategory {
+  category: string;
+  icon: IconType;
+  color: string;
+  badge: string;
+  rules: Rule[];
+}
 
 const Rules = () => {
-  const ruleCategories = [
+  const ruleCategories: RuleCategory[] = [
     {
       category: "Základní pravidla RP",
       icon: FaGamepad,
