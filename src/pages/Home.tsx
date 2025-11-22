@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { FaCopy, FaDiscord, FaGamepad, FaUsers, FaServer, FaCode, FaShieldAlt, FaRocket } from "react-icons/fa";
+import { FaCopy, FaDiscord, FaGamepad, FaUsers, FaServer, FaCode, FaShieldAlt, FaRocket, FaHeart, FaTrophy, FaStar } from "react-icons/fa";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import losSantosBg from "@/assets/los-santos-bg.jpg";
 import logo from "@/assets/logo.png";
 
@@ -26,25 +27,49 @@ const Home = () => {
       title: "Real RP",
       description: "Autentický roleplay s profesionálními hráči a realistickými mechaniky",
       color: "#ff3333",
+      gradient: "from-red-600 to-red-700",
     },
     {
       icon: FaShieldAlt,
       title: "Whitelist",
       description: "Chráníme naši komunitu pomocí whitelist systému pro kvalitní zážitek",
       color: "#ff6666",
+      gradient: "from-red-500 to-red-600",
     },
     {
       icon: FaRocket,
       title: "Vlastní skripty",
       description: "Unikátní vlastní skripty vytvořené našim developerským týmem",
       color: "#ff3333",
+      gradient: "from-red-600 to-pink-600",
     },
   ];
 
   const stats = [
-    { label: "Aktivních hráčů", value: "0+", icon: FaUsers },
-    { label: "Vlastních scriptů", value: "2+", icon: FaCode },
-    { label: "Server uptime", value: "99.9%", icon: FaServer },
+    { label: "Aktivních hráčů", value: "0+", icon: FaUsers, color: "#ff3333" },
+    { label: "Vlastních scriptů", value: "2+", icon: FaCode, color: "#9933ff" },
+    { label: "Server uptime", value: "99.9%", icon: FaServer, color: "#33ff77" },
+  ];
+
+  const benefits = [
+    {
+      icon: FaHeart,
+      title: "Aktivní komunita",
+      description: "Přátelská komunita plná nadšenců pro RP",
+      color: "#ff3366",
+    },
+    {
+      icon: FaTrophy,
+      title: "Turnaje & Eventy",
+      description: "Pravidelné eventy s hodnotnými cenami",
+      color: "#ffaa33",
+    },
+    {
+      icon: FaStar,
+      title: "Progresivní systém",
+      description: "Rozvíjej svou postavu a sbírej achievementy",
+      color: "#33ccff",
+    },
   ];
 
   return (
@@ -60,8 +85,21 @@ const Home = () => {
           }}
         />
         
-        {/* Red glow overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#ff3333]/5 to-[#0f0f0f]" />
+        {/* Animated gradient overlay */}
+        <motion.div 
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 50% 50%, rgba(255,51,51,0.1) 0%, rgba(15,15,15,1) 70%)",
+              "radial-gradient(circle at 60% 40%, rgba(255,51,51,0.15) 0%, rgba(15,15,15,1) 70%)",
+              "radial-gradient(circle at 40% 60%, rgba(255,51,51,0.1) 0%, rgba(15,15,15,1) 70%)",
+            ]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+        
+        {/* Bottom gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0f0f0f]" />
         
         {/* Content */}
         <div className="container mx-auto px-4 z-20 relative">
@@ -100,8 +138,16 @@ const Home = () => {
               <h1 className="text-7xl md:text-9xl font-black mb-6 text-gradient leading-tight">
                 FEARLINE
               </h1>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <Badge className="bg-[#ff3333] text-white px-4 py-2 text-base font-bold">
+                  🔥 NOVÝ SERVER
+                </Badge>
+                <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 text-base font-bold">
+                  ✨ WHITELIST
+                </Badge>
+              </div>
               <p className="text-xl md:text-2xl text-[#cccccc] max-w-3xl mx-auto font-light">
-                Nejnovější FiveM RP na CZ/SK
+                Nejnovější FiveM RP server na CZ/SK scéně s vlastními skripty a unikátním konceptem
               </p>
             </motion.div>
 
@@ -113,35 +159,57 @@ const Home = () => {
               className="flex flex-col items-center gap-8"
             >
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Button
-                  onClick={handleConnect}
-                  size="lg"
-                  className="text-lg px-14 py-8 rounded-2xl font-bold bg-gradient-to-r from-[#ff3333] to-[#ff6666] hover:from-[#ff6666] hover:to-[#ff3333] shadow-[0_0_40px_rgba(255,51,51,0.5)] hover:shadow-[0_0_60px_rgba(255,51,51,0.7)] transition-all duration-300"
-                >
-                  <FaGamepad className="text-2xl" />
-                  Připojit se na server
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    onClick={handleConnect}
+                    size="lg"
+                    className="text-lg px-14 py-8 rounded-2xl font-bold bg-gradient-to-r from-[#ff3333] to-[#ff6666] hover:from-[#ff6666] hover:to-[#ff3333] shadow-[0_0_40px_rgba(255,51,51,0.5)] hover:shadow-[0_0_60px_rgba(255,51,51,0.7)] transition-all duration-300"
+                  >
+                    <FaGamepad className="text-2xl" />
+                    Připojit se na server
+                  </Button>
+                </motion.div>
                 
-                <Button
-                  onClick={handleCopy}
-                  size="lg"
-                  variant="outline"
-                  className="text-lg px-10 py-8 rounded-2xl font-semibold border-2 border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10"
-                >
-                  <FaCopy className="text-xl" />
-                  Zkopírovat IP
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    onClick={handleCopy}
+                    size="lg"
+                    variant="outline"
+                    className="text-lg px-10 py-8 rounded-2xl font-semibold border-2 border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10"
+                  >
+                    <FaCopy className="text-xl" />
+                    Zkopírovat IP
+                  </Button>
+                </motion.div>
               </div>
 
-              <div className="glass rounded-2xl p-6 max-w-md border border-[#ff3333]/20">
+              <motion.div 
+                className="glass rounded-2xl p-6 max-w-md border border-[#ff3333]/20"
+                whileHover={{ borderColor: "rgba(255, 51, 51, 0.4)" }}
+              >
                 <code className="text-sm text-[#cccccc] select-all">
                   {connectLink}
                 </code>
-              </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="pt-10"
+            >
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="text-[#ff3333] text-2xl"
+              >
+                ↓
+              </motion.div>
             </motion.div>
           </div>
         </div>
-
       </section>
 
       {/* O nás section */}
@@ -173,30 +241,96 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="glass-strong rounded-3xl p-10 text-center space-y-6 glow-hover"
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="glass-strong rounded-3xl p-10 text-center space-y-6 group relative overflow-hidden"
               >
-                <div 
-                  className="mx-auto w-24 h-24 rounded-2xl flex items-center justify-center"
+                {/* Animated background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                <motion.div 
+                  className="mx-auto w-24 h-24 rounded-2xl flex items-center justify-center relative z-10"
                   style={{
                     background: `linear-gradient(135deg, ${feature.color}, ${feature.color}dd)`,
                     boxShadow: `0 0 30px ${feature.color}66`,
                   }}
+                  whileHover={{ rotate: 5, scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <feature.icon className="text-5xl text-white" />
-                </div>
-                <h3 className="text-3xl font-bold">{feature.title}</h3>
-                <p className="text-[#cccccc] leading-relaxed text-lg">
+                </motion.div>
+                <h3 className="text-3xl font-bold relative z-10">{feature.title}</h3>
+                <p className="text-[#cccccc] leading-relaxed text-lg relative z-10">
                   {feature.description}
                 </p>
               </motion.div>
             ))}
           </div>
+
+          {/* Benefits Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-32"
+          >
+            <h3 className="text-5xl font-black text-center mb-4">
+              Proč si <span className="text-gradient">vybrat nás</span>?
+            </h3>
+            <p className="text-[#cccccc] text-center mb-16 text-lg max-w-2xl mx-auto">
+              Nabízíme to nejlepší z RP světa s jedinečným přístupem
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {benefits.map((benefit, index) => {
+                const Icon = benefit.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -8 }}
+                    className="glass rounded-2xl p-8 text-center space-y-4"
+                  >
+                    <div 
+                      className="w-16 h-16 rounded-xl mx-auto flex items-center justify-center"
+                      style={{
+                        background: `linear-gradient(135deg, ${benefit.color}, ${benefit.color}dd)`,
+                        boxShadow: `0 0 20px ${benefit.color}44`,
+                      }}
+                    >
+                      <Icon className="text-3xl text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold">{benefit.title}</h4>
+                    <p className="text-[#cccccc] text-sm">{benefit.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl md:text-6xl font-black mb-4">
+              Naše <span className="text-gradient">čísla</span>
+            </h2>
+            <p className="text-[#cccccc] text-lg">
+              Statistiky, na které jsme hrdí
+            </p>
+          </motion.div>
+
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
@@ -207,9 +341,26 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="glass-strong rounded-3xl p-10 text-center group hover:border-[#ff3333] transition-all duration-300"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="glass-strong rounded-3xl p-10 text-center group relative overflow-hidden"
                 >
-                  <Icon className="text-6xl text-[#ff3333] mx-auto mb-6 group-hover:scale-110 transition-transform" />
+                  {/* Glow effect */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                    style={{
+                      background: `radial-gradient(circle at center, ${stat.color}, transparent 70%)`,
+                    }}
+                  />
+                  
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <Icon 
+                      className="text-6xl mx-auto mb-6 transition-transform" 
+                      style={{ color: stat.color }}
+                    />
+                  </motion.div>
                   <div className="text-5xl font-black text-gradient mb-3">
                     {stat.value}
                   </div>
@@ -233,32 +384,54 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <div className="glass-strong rounded-3xl p-16 max-w-4xl mx-auto border border-[#ff3333]/20">
-              <div className="mb-8">
+            <div className="glass-strong rounded-3xl p-16 max-w-4xl mx-auto border border-[#ff3333]/20 relative overflow-hidden">
+              {/* Animated background */}
+              <motion.div
+                className="absolute inset-0 opacity-5"
+                animate={{
+                  background: [
+                    "radial-gradient(circle at 20% 50%, #5865F2 0%, transparent 50%)",
+                    "radial-gradient(circle at 80% 50%, #5865F2 0%, transparent 50%)",
+                    "radial-gradient(circle at 20% 50%, #5865F2 0%, transparent 50%)",
+                  ]
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+              />
+
+              <motion.div 
+                className="mb-8 relative z-10"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ duration: 0.3 }}
+              >
                 <FaDiscord className="text-8xl text-[#5865F2] mx-auto" />
-              </div>
-              <h3 className="text-5xl md:text-6xl font-black mb-8">
+              </motion.div>
+              
+              <h3 className="text-5xl md:text-6xl font-black mb-8 relative z-10">
                 Připoj se k <span className="text-gradient">komunitě</span>
               </h3>
-              <p className="text-[#cccccc] mb-10 text-xl leading-relaxed max-w-2xl mx-auto">
+              
+              <p className="text-[#cccccc] mb-10 text-xl leading-relaxed max-w-2xl mx-auto relative z-10">
                 Máš dotazy? Potřebuješ pomoc? Náš tým je připraven ti pomoct
-                24/7 na našem Discord serveru.
+                24/7 na našem Discord serveru. Staň se součástí aktivní komunity!
               </p>
-              <Button
-                asChild
-                size="lg"
-                className="bg-[#5865F2] hover:bg-[#4752C4] text-white px-12 py-8 text-xl rounded-2xl shadow-[0_0_40px_rgba(88,101,242,0.5)] hover:shadow-[0_0_60px_rgba(88,101,242,0.7)] transition-all duration-300 font-bold"
-              >
-                <a
-                  href="https://discord.gg/4MAgM4RgTG"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3"
+              
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-[#5865F2] hover:bg-[#4752C4] text-white px-12 py-8 text-xl rounded-2xl shadow-[0_0_40px_rgba(88,101,242,0.5)] hover:shadow-[0_0_60px_rgba(88,101,242,0.7)] transition-all duration-300 font-bold relative z-10"
                 >
-                  <FaDiscord className="text-3xl" />
-                  Připoj se na Discord
-                </a>
-              </Button>
+                  <a
+                    href="https://discord.gg/4MAgM4RgTG"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3"
+                  >
+                    <FaDiscord className="text-3xl" />
+                    Připoj se na Discord
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         </div>
