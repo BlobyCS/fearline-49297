@@ -35,6 +35,18 @@ const Rules = () => {
         {
           title: "Fear RP",
           description: "Povinnost realisticky reagovat na ohrožení života - strach, poslušnost při aim."
+        },
+        {
+          title: "Fail RP",
+          description: "Zakázáno hrát nerealisticky nebo porušovat logiku roleplayu (např. mluvit když jsi svázaný)."
+        },
+        {
+          title: "Pain RP",
+          description: "Musíš realisticky reagovat na zranění - nemůžeš běhat s prostřelenou nohou."
+        },
+        {
+          title: "Value of Life",
+          description: "Musíš si vážit svého života - nesmíš se zbytečně vystavovat smrtelnému nebezpečí."
         }
       ]
     },
@@ -59,6 +71,166 @@ const Rules = () => {
         {
           title: "Stream sniping",
           description: "Zakázáno sledovat stream jiného hráče pro získání výhody."
+        },
+        {
+          title: "Nahrávání RP",
+          description: "Doporučeno nahrávat své RP pro případné report situace a důkazy."
+        }
+      ]
+    },
+    {
+      category: "Pravidla pro smrt a NLR",
+      icon: FaSkull,
+      color: "#9933ff",
+      badge: "NLR",
+      rules: [
+        {
+          title: "New Life Rule (NLR)",
+          description: "Po smrti zapomínáš vše z předchozího života - nesmíš se vrátit na místo smrti 15 minut."
+        },
+        {
+          title: "Respawn a léčení",
+          description: "Po smrtelném zranění musíš čekat na EMS. Respawn pouze s povolením admina nebo po stanovené době."
+        },
+        {
+          title: "Pomsta po smrti",
+          description: "Zakázáno se mstít osobám, které tě zabily, pokud si to nepamatuješ (NLR)."
+        },
+        {
+          title: "Combat logging",
+          description: "Zakázáno odpojit se ze hry během aktivního roleplayu nebo souboje."
+        },
+        {
+          title: "Hra na mrtvého",
+          description: "Když jsi v bezvědomí, nesmíš mluvit ani poslouchat konverzace. Výjimka je šeptání k EMS."
+        }
+      ]
+    },
+    {
+      category: "Criminal RP pravidla",
+      icon: FaMask,
+      color: "#ff9933",
+      badge: "CRIME",
+      rules: [
+        {
+          title: "Loupež a kidnapping",
+          description: "Loupež a únos vyžadují kvalitní roleplay. Minimálně 3 online policisté pro bankovní loupež."
+        },
+        {
+          title: "Hostage RP",
+          description: "S rukojmími musíš zacházet realisticky, nesmíš je zabít bez důvodu."
+        },
+        {
+          title: "Green Zones",
+          description: "Na určených místech (spawn, nemocnice) je zakázána jakákoli kriminální aktivita."
+        },
+        {
+          title: "Limit loupeží",
+          description: "Dodržuj cooldown mezi velkými akcemi (banky, obchody). Max. 1 velká loupež za 2 hodiny."
+        },
+        {
+          title: "Maskování identity",
+          description: "S maskou nebo helmou nemůžeš být rozpoznán. Musíš mít celý obličej zakrytý."
+        }
+      ]
+    },
+    {
+      category: "Pravidla pro vozidla",
+      icon: FaCar,
+      color: "#33ccff",
+      badge: "VEHICLE",
+      rules: [
+        {
+          title: "Vehicle Deathmatch (VDM)",
+          description: "Zakázáno záměrně přejíždět hráče vozidlem bez RP důvodu."
+        },
+        {
+          title: "Realistické řízení",
+          description: "Řiď realisticky podle situace - respektuj rychlostní limity ve městě, nepřejíždě červenou bez důvodu."
+        },
+        {
+          title: "Stunt driving",
+          description: "Zakázáno dělat nerealistické skoky a kaskadérské kousky bez RP důvodu."
+        },
+        {
+          title: "Únik před policií",
+          description: "Při honičce s policií musíš hrát realisticky - nelituj pneumatik a nezneužívej terén."
+        },
+        {
+          title: "Opuštění vozidla",
+          description: "Nesmíš skákat z jedoucího vozidla nebo okamžitě vytahovat zbraň po vystoupení."
+        }
+      ]
+    },
+    {
+      category: "Pravidla pro frakce",
+      icon: FaUsers,
+      color: "#ff33cc",
+      badge: "GANG",
+      rules: [
+        {
+          title: "Gang wars",
+          description: "Války mezi gangami musí mít RP důvod a schválení adminů. Dodržuj territory pravidla."
+        },
+        {
+          title: "Aliance a vztahy",
+          description: "Udržuj konzistentní vztahy mezi frakcemi. Nelze být ve válce a zároveň spolupracovat."
+        },
+        {
+          title: "Verbování členů",
+          description: "Nováčky musíš řádně prověřit a zapracovat. Žádné instant povýšení do vysokých pozic."
+        },
+        {
+          title: "Frakční území",
+          description: "Respektuj území jiných frakcí. Narušení cizího území může vést ke konfliktu."
+        }
+      ]
+    },
+    {
+      category: "Pravidla pro PD/EMS",
+      icon: FaShieldAlt,
+      color: "#3366ff",
+      badge: "LEO",
+      rules: [
+        {
+          title: "Profesionalita",
+          description: "Jako člen PD/EMS musíš být profesionální, slušný a dodržovat protokoly služby."
+        },
+        {
+          title: "Korupce",
+          description: "Korupce je možná pouze s předchozím schválením vedení a admina. Nelze zneužívat pravomoci."
+        },
+        {
+          title: "Použití síly",
+          description: "Policie používá přiměřenou sílu. Střelba pouze při ohrožení života nebo útěku s těžkým zločinem."
+        },
+        {
+          title: "Zadržení a vyšetřování",
+          description: "Před zatčením musí proběhnout řádné vyšetřování a důkazy. Nelze zatknout bez důvodu."
+        }
+      ]
+    },
+    {
+      category: "Ekonomika a business",
+      icon: FaDollarSign,
+      color: "#33ff77",
+      badge: "ECO",
+      rules: [
+        {
+          title: "Money transfers",
+          description: "Větší převody peněz musí mít RP důvod. Žádné darování velkých sum bez pozadí."
+        },
+        {
+          title: "Podnikání",
+          description: "Vlastníš-li business, musíš ho aktivně provozovat a poskytovat RP ostatním."
+        },
+        {
+          title: "Ceny a služby",
+          description: "Dodržuj realistické ceny za zboží a služby. Nelze účtovat extrémní částky."
+        },
+        {
+          title: "Money laundering",
+          description: "Praní špinavých peněz vyžaduje propracovaný RP a používání legálních businessů."
         }
       ]
     },
