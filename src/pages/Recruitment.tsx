@@ -141,7 +141,7 @@ const Recruitment = () => {
       };
 
       const response = await fetch(
-        "https://discord.com/api/webhooks/1432380924246491197/cZHy5IVORKA1tD-Rqc-f7POHE5czoEMAOQ4ueP0tnXTDQbLzkR0b4WJ20WWldIfsLP-z",
+        "",
         {
           method: "POST",
           headers: {
