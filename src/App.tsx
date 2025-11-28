@@ -10,7 +10,6 @@ import ATeam from "./pages/ATeam";
 import VIP from "./pages/VIP";
 import Recruitment from "./pages/Recruitment";
 import NotFound from "./pages/NotFound";
-import DiscordAuth from "./pages/DiscordAuth";
 
 
 const queryClient = new QueryClient();
@@ -22,8 +21,6 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <Routes>
-          <Route path="/discord-auth" element={<DiscordAuth />} />
-          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/pravidla" element={<Layout><Rules /></Layout>} />
           <Route path="/ateam" element={<Layout><ATeam /></Layout>} />
