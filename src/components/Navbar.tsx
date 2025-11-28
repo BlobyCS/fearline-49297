@@ -1,22 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignOutAlt, FaTicketAlt, FaUser, FaUserShield, FaCog } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord } from "react-icons/fa";
 import logo from "@/assets/logo.png";
-import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { useAuth } from "@/contexts/AuthContext";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
-  const { user: discordUser, logout: discordLogout } = useDiscordAuth();
-  const { user, isAdmin, signOut } = useAuth();
 
   const navItems = [
     { path: "/", label: "Domů", icon: FaHome },
@@ -57,7 +45,6 @@ const Navbar = () => {
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               const Icon = item.icon;
-
               return (
                 <Link key={item.path} to={item.path}>
                   <motion.div
@@ -87,112 +74,6 @@ const Navbar = () => {
               <FaDiscord className="text-lg" />
               <span className="hidden md:inline">Discord</span>
             </motion.a>
-
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <motion.button
-                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-[#1a1a1a] hover:bg-[#222222] transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-[#ff3333] text-white">
-                        {user.email?.charAt(0).toUpperCase() || 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-[#cccccc] font-semibold hidden md:inline">
-                      {user.email?.split('@')[0] || 'User'}
-                    </span>
-                  </motion.button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20 w-48">
-                  <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link to="/profil" className="flex items-center text-[#cccccc] hover:text-white">
-                      <FaUser className="mr-2" />
-                      Můj profil
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link to="/tickety" className="flex items-center text-[#cccccc] hover:text-white">
-                      <FaTicketAlt className="mr-2" />
-                      Tickety
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link to="/nastaveni" className="flex items-center text-[#cccccc] hover:text-white">
-                      <FaCog className="mr-2" />
-                      Nastavení
-                    </Link>
-                  </DropdownMenuItem>
-                  {isAdmin && (
-                    <>
-                      <DropdownMenuSeparator className="bg-[#ff3333]/20" />
-                      <DropdownMenuItem asChild className="cursor-pointer">
-                        <Link to="/admin" className="flex items-center text-[#ff3333] hover:text-[#ff6666]">
-                          <FaUserShield className="mr-2" />
-                          Admin Panel
-                        </Link>
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                  <DropdownMenuSeparator className="bg-[#ff3333]/20" />
-                  <DropdownMenuItem
-                    onClick={signOut}
-                    className="text-[#cccccc] hover:text-white cursor-pointer"
-                  >
-                    <FaSignOutAlt className="mr-2" />
-                    Odhlásit se
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : discordUser ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <motion.button
-                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-[#1a1a1a] hover:bg-[#222222] transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={discordUser.discord_avatar || undefined} />
-                      <AvatarFallback className="bg-[#ff3333] text-white">
-                        {discordUser.discord_username.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-[#cccccc] font-semibold hidden md:inline">
-                      @{discordUser.discord_username}
-                    </span>
-                  </motion.button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="glass-strong border-[#ff3333]/20 w-48">
-                  <DropdownMenuItem asChild className="cursor-pointer">
-                    <Link to="/nastaveni" className="flex items-center text-[#cccccc] hover:text-white">
-                      <FaCog className="mr-2" />
-                      Nastavení
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-[#ff3333]/20" />
-                  <DropdownMenuItem
-                    onClick={discordLogout}
-                    className="text-[#cccccc] hover:text-white cursor-pointer"
-                  >
-                    <FaSignOutAlt className="mr-2" />
-                    Odhlásit se
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link to="/auth">
-                <motion.button
-                  className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#ff3333] to-[#ff6666] text-white hover:shadow-[0_0_25px_rgba(255,51,51,0.5)] transition-all font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span>Přihlásit se</span>
-                </motion.button>
-              </Link>
-            )}
           </div>
         </div>
       </div>
