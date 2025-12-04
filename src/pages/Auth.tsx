@@ -23,12 +23,15 @@ const Auth = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Sign in clicked", { email, password: password ? "***" : "empty" });
     
     try {
       authSchema.parse({ email, password });
       setIsLoading(true);
+      console.log("Validation passed, calling signIn...");
       
       const { error } = await signIn(email, password);
+      console.log("SignIn result:", error ? error.message : "success");
       
       if (error) {
         if (error.message.includes("Invalid login credentials")) {
@@ -81,10 +84,10 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-background to-muted">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4 pt-24" style={{ background: 'linear-gradient(to bottom, #0f0f0f, #1a1a1a)' }}>
+      <Card className="w-full max-w-md bg-[#1a1a1a] border-[#333]">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Přihlášení</CardTitle>
+          <CardTitle className="text-2xl text-center text-white">Přihlášení</CardTitle>
           <CardDescription className="text-center">
             Přihlaste se nebo vytvořte nový účet
           </CardDescription>
@@ -119,7 +122,11 @@ const Auth = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[#ff3333] hover:bg-[#ff4444] text-white" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Přihlašování..." : "Přihlásit se"}
                 </Button>
               </form>
@@ -148,7 +155,11 @@ const Auth = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[#ff3333] hover:bg-[#ff4444] text-white" 
+                  disabled={isLoading}
+                >
                   {isLoading ? "Registrace..." : "Vytvořit účet"}
                 </Button>
               </form>
