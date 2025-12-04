@@ -1,10 +1,20 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignInAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
 import logo from "@/assets/logo.png";
+import { useAuth } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
+  const { user, isAdmin, signOut } = useAuth();
 
   const navItems = [
     { path: "/", label: "Domů", icon: FaHome },
@@ -74,6 +84,61 @@ const Navbar = () => {
               <FaDiscord className="text-lg" />
               <span className="hidden md:inline">Discord</span>
             </motion.a>
+
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <motion.button
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] transition-all"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={undefined} />
+                      <AvatarFallback className="bg-[#ff3333] text-white text-sm">
+                        {user.email?.[0]?.toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden md:inline text-[#cccccc] text-sm">{user.email?.split('@')[0]}</span>
+                  </motion.button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-[#1a1a1a] border-[#333]">
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings" className="flex items-center gap-2 cursor-pointer">
+                      <FaCog className="text-sm" />
+                      <span>Nastavení</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                        <FaCrown className="text-sm text-[#ff3333]" />
+                        <span>Admin Panel</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator className="bg-[#333]" />
+                  <DropdownMenuItem 
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2 cursor-pointer text-red-400"
+                  >
+                    <FaSignOutAlt className="text-sm" />
+                    <span>Odhlásit se</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <motion.div
+                  className="flex items-center space-x-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#ff3333] to-[#ff6666] text-white hover:from-[#ff4444] hover:to-[#ff7777] transition-all font-semibold shadow-[0_0_15px_rgba(255,51,51,0.3)] hover:shadow-[0_0_25px_rgba(255,51,51,0.5)]"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaSignInAlt className="text-lg" />
+                  <span className="hidden md:inline">Přihlásit</span>
+                </motion.div>
+              </Link>
+            )}
           </div>
         </div>
       </div>
