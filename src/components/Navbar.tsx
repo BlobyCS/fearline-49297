@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignInAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaBook, FaUsers, FaCrown, FaEnvelope, FaDiscord, FaSignInAlt, FaCog, FaSignOutAlt, FaTicketAlt, FaUser } from "react-icons/fa";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -104,18 +104,33 @@ const Navbar = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 bg-[#1a1a1a] border-[#333]">
                   <DropdownMenuItem asChild>
+                    <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
+                      <FaUser className="text-sm" />
+                      <span>Profil</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/tickets" className="flex items-center gap-2 cursor-pointer">
+                      <FaTicketAlt className="text-sm" />
+                      <span>Tickety</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/settings" className="flex items-center gap-2 cursor-pointer">
                       <FaCog className="text-sm" />
                       <span>Nastavení</span>
                     </Link>
                   </DropdownMenuItem>
                   {isAdmin && (
-                    <DropdownMenuItem asChild>
-                      <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
-                        <FaCrown className="text-sm text-[#ff3333]" />
-                        <span>Admin Panel</span>
-                      </Link>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuSeparator className="bg-[#333]" />
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                          <FaCrown className="text-sm text-[#ff3333]" />
+                          <span>Admin Panel</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
                   )}
                   <DropdownMenuSeparator className="bg-[#333]" />
                   <DropdownMenuItem 
