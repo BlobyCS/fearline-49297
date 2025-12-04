@@ -256,20 +256,6 @@ const Settings = () => {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-medium">SMTP Konfigurace</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Server: smtp.seznam.cz | Port: 587 | Email: no-reply@fearline.eu
-                      </p>
-                    </div>
-                    <Button variant="outline">
-                      Testovat email
-                    </Button>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center justify-between">
-                    <div>
                       <h3 className="font-medium">Správa uživatelů</h3>
                       <p className="text-sm text-muted-foreground">
                         Spravujte role a oprávnění
