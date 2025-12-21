@@ -261,7 +261,7 @@ const Settings = () => {
                         Spravujte role a oprávnění
                       </p>
                     </div>
-                    <Button variant="outline" onClick={() => window.location.hash = '/admin'}>
+                    <Button variant="outline" onClick={() => window.location.href = '/admin'}>
                       Admin panel
                     </Button>
                   </div>
