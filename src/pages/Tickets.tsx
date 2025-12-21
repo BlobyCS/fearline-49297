@@ -382,19 +382,29 @@ const Tickets = () => {
                 </div>
               </ScrollArea>
 
-              <Card>
-                <CardContent className="pt-4">
-                  <form onSubmit={handleSendMessage} className="flex gap-2">
-                    <Input
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      placeholder="Napište zprávu..."
-                      required
-                    />
-                    <Button type="submit">Odeslat</Button>
-                  </form>
-                </CardContent>
-              </Card>
+              {selectedTicket.status !== 'closed' ? (
+                <Card>
+                  <CardContent className="pt-4">
+                    <form onSubmit={handleSendMessage} className="flex gap-2">
+                      <Input
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="Napište zprávu..."
+                        required
+                      />
+                      <Button type="submit">Odeslat</Button>
+                    </form>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="bg-muted/50">
+                  <CardContent className="pt-4">
+                    <p className="text-center text-muted-foreground">
+                      Tento ticket je uzavřený a nelze do něj odpovídat.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </>
           ) : (
             <Card className="flex items-center justify-center h-full">
