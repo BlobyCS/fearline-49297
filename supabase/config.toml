@@ -2,3 +2,6 @@ project_id = "dcvwlfhxutndejgdocxn"
 
 [functions.discord-auth]
 verify_jwt = false
+
+[functions.link-discord]
+verify_jwt = false

@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import DiscordLinkCallback from "./pages/DiscordLinkCallback";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,13 @@ const App = () => (
             <Route path="/vip" element={<Layout><VIP /></Layout>} />
             <Route path="/nabor" element={<Layout><Recruitment /></Layout>} />
             <Route path="/auth" element={<Layout><Auth /></Layout>} />
+            <Route path="/discord-link-callback" element={
+              <Layout>
+                <ProtectedRoute>
+                  <DiscordLinkCallback />
+                </ProtectedRoute>
+              </Layout>
+            } />
             <Route path="/settings" element={
               <Layout>
                 <ProtectedRoute>
