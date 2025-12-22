@@ -23,7 +23,7 @@ interface ProfileData {
   created_at: string;
 }
 
-const DISCORD_CLIENT_ID = "1325832697619177492";
+const DISCORD_CLIENT_ID = "1266090505117372570";
 
 const Profile = () => {
   const { user, userRole } = useAuth();
@@ -146,7 +146,7 @@ const Profile = () => {
   };
 
   const handleLinkDiscord = () => {
-    const redirectUri = `${window.location.origin}/discord-link-callback`;
+    const redirectUri = "https://fearline.eu/discord-link-callback";
     const scopes = "identify";
     const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes}`;
     window.location.href = discordAuthUrl;
