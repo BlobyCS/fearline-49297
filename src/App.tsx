@@ -37,9 +37,7 @@ const App = () => (
             <Route path="/auth" element={<Layout><Auth /></Layout>} />
             <Route path="/discord-link-callback" element={
               <Layout>
-                <ProtectedRoute>
-                  <DiscordLinkCallback />
-                </ProtectedRoute>
+                <DiscordLinkCallback />
               </Layout>
             } />
             <Route path="/settings" element={
