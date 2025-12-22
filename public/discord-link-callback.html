@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Propojení - FearLine</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      max-width: 400px;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top-color: #5865F2;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .success { color: #43b581; }
+    .error { color: #f04747; }
+    .icon { font-size: 3rem; margin-bottom: 1rem; }
+    p { margin: 0.5rem 0; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="loading">
+      <div class="spinner"></div>
+      <h2>Propojování Discord účtu...</h2>
+      <p>Počkejte prosím</p>
+    </div>
+    <div id="success" style="display:none;">
+      <div class="icon success">✓</div>
+      <h2 class="success">Účet propojen!</h2>
+      <p id="discord-username"></p>
+      <p>Přesměrování...</p>
+    </div>
+    <div id="error" style="display:none;">
+      <div class="icon error">✕</div>
+      <h2 class="error">Propojení selhalo</h2>
+      <p id="error-message"></p>
+      <p>Přesměrování...</p>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://dcvwlfhxutndejgdocxn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjdndsZmh4dXRuZGVqZ2RvY3huIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE1NzU2MjUsImV4cCI6MjA3NzE1MTYyNX0.EaeHmNZcfevhx-dXQiXLj2TNBDmmtZLQKsyHlHKLrOU';
+    
+    function showError(message) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error-message').textContent = message;
+      setTimeout(() => { window.location.href = '/#/profile'; }, 3000);
+    }
+    
+    function showSuccess(username) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('discord-username').textContent = username;
+      setTimeout(() => { window.location.href = '/#/profile'; }, 2000);
+    }
+    
+    async function linkDiscord() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      
+      if (!code) {
+        showError('Chybí autorizační kód');
+        return;
+      }
+      
+      // Get session from localStorage
+      const storageKey = `sb-dcvwlfhxutndejgdocxn-auth-token`;
+      const sessionStr = localStorage.getItem(storageKey);
+      
+      if (!sessionStr) {
+        showError('Musíte být přihlášeni');
+        return;
+      }
+      
+      let session;
+      try {
+        session = JSON.parse(sessionStr);
+      } catch (e) {
+        showError('Chyba při načítání session');
+        return;
+      }
+      
+      const userId = session?.user?.id;
+      if (!userId) {
+        showError('Musíte být přihlášeni');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/link-discord`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            code: code,
+            redirect_uri: 'https://fearline.eu/discord-link-callback',
+            user_id: userId
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showSuccess(data.discord.username);
+        } else {
+          showError(data.error || 'Propojení selhalo');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showError('Chyba při komunikaci se serverem');
+      }
+    }
+    
+    linkDiscord();
+  </script>
+</body>
+</html>
