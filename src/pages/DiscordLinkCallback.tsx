@@ -29,7 +29,7 @@ const DiscordLinkCallback = () => {
       }
 
       try {
-        const redirectUri = `${window.location.origin}/discord-link-callback`;
+        const redirectUri = "https://fearline.eu/discord-link-callback";
         
         const { data, error } = await supabase.functions.invoke("link-discord", {
           body: {
