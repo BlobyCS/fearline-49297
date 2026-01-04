@@ -39,7 +39,7 @@ const Index = () => {
 
         {/* Footer text */}
         <p className="text-zinc-500 text-sm">
-          FEARLINE • 2024 - 2025
+          FEARLINE • 2025 - 2026
         </p>
       </div>
     </div>
